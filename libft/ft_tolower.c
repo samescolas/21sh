@@ -6,13 +6,13 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/08 18:53:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/01/20 10:49:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/04 13:16:18 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_tolower(int c)
+char	ft_tolower(char c)
 {
 	return ((c >= 'A' && c <= 'Z') ? c + 32 : c);
 }

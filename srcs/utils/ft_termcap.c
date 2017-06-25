@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_termcap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/31 08:44:02 by sescolas          #+#    #+#             */
+/*   Updated: 2017/06/01 08:51:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_termcap.h"
 
-void	ft_strdel(char **as)
+int		ft_putc(int c)
 {
-	char **ptr;
+	write(STDOUT_FILENO, &c, 1);
+	return (0);
+}
 
-	if (!as || !*as)
+void	ft_move_cursor(char *direction, int n)
+{
+	while (n--)
+		tputs(direction, 1, ft_putc);
+}
+
+void	ft_putstr_mode(char *str, char *mode)
+{
+	if (!mode)
+	{
+		tputs(str, 1, ft_putc);
 		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
+	}
+	if (mode == US || mode == MR)
+		tputs(mode, 1, ft_putc);
+	else
+		return ;
+	tputs(str, 1, ft_putc);
+	tputs((mode == US ? UE : ME), 1, ft_putc);
 }

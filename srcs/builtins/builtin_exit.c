@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/02 20:30:15 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/30 09:19:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "sftsh_types.h"
+#include "sftsh_atexit.h"
 
-void	ft_strdel(char **as)
+int		sftsh_exit(t_command *command)
 {
-	char **ptr;
-
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
+	free_command(command);
+	ft_atexit();
+	return (0);
 }

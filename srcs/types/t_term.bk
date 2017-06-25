@@ -1,0 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_term.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/01 10:05:19 by sescolas          #+#    #+#             */
+/*   Updated: 2017/06/21 12:28:32 by sescolas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sftsh_types.h"
+#include "sftsh_read_line.h"
+#include "sftsh_utils.h"
+
+t_term	*create_term(void)
+{
+	t_term	*ret;
+
+	if (!(ret = (t_term*)malloc(sizeof(t_term))))
+		ft_fatal("sftsh: err: out of memory\n");
+	ret->clipboard = (void *)0;
+	ret->clipboard_len = 0;
+	ret->prompt[0] = (void *)0;
+	ret->prompt[1] = (void *)0;
+	ret->prompt[2] = (void *)0;
+	ret->cmd_len = 0;
+	ret->pos = create_coord(0, 0);
+	return (ret);
+}

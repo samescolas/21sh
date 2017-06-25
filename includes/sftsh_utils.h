@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   sftsh_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/30 09:33:33 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/30 09:35:14 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SFTSH_UTILS_H
+# define SFTSH_UTILS_H
 
-void	ft_strdel(char **as)
-{
-	char **ptr;
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <termcap.h>
+# include <termios.h>
 
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
-}
+void	load_terminal(void);
+void	ft_fatal(char *err_message);
+char	*find_exe_path(char *cmd_str, char **envp);
+
+# endif

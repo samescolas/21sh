@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   sftsh_lexer.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/30 09:41:47 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/30 09:41:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SFTSH_LEXER_H
+# define SFTSH_LEXER_H
 
-void	ft_strdel(char **as)
-{
-	char **ptr;
+# include <unistd.h>
+# include <stdlib.h>
 
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
-}
+char	*expand_tilde(char *path, char **envp);
+char	*expand_vars(char *str, char **envp);
+char	*expand_dots(char *str);
+void	expand_tokens(char **tokens, char **envp);
+char	**tokenize(char *cmd_str);
+
+#endif

@@ -1,0 +1,96 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sftsh.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
+/*   Updated: 2017/06/21 13:29:24 by sescolas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sftsh.h"
+#include "../libft/libft.h"
+#include "sftsh_vars.h"
+#include "sftsh_read_line.h"
+#include "sftsh_parser.h"
+#include "sftsh_exec.h"
+
+static int	input(t_term *term)
+{
+	int				line_read;
+
+	ft_strdel(&(term->prompt[0]));
+	ft_padstr((term->prompt[1] ? term->prompt[1] : DEFAULT_PROMPT)\
+			, 1, (term->prompt[2] ? term->prompt[2] : DEFAULT_COLOR));
+	line_read = read_line(term);
+	while (line_read <= 0)
+	{
+		ft_strdel(&(term->prompt[0]));
+		ft_padstr((term->prompt[1] ? term->prompt[1] : DEFAULT_PROMPT)\
+			, 1, (term->prompt[2] ? term->prompt[2] : DEFAULT_COLOR));
+		line_read = read_line(term);
+	}
+	return (1);
+}
+
+static char	*get_color(char *color)
+{
+	if (ft_strcmp(color, "default") == 0 || ft_strcmp(color, "def") == 0)
+		return (ft_strdup(DEF));
+	else if (ft_strcmp(color, "red") == 0 || ft_strcmp(color, "r") == 0)
+		return (ft_strdup(RED));
+	else if (ft_strcmp(color, "blue") == 0 || ft_strcmp(color, "b") == 0)
+		return (ft_strdup(BLU));
+	else if (ft_strcmp(color, "magenta") == 0 || ft_strcmp(color, "m") == 0)
+		return (ft_strdup(MAG));
+	else if (ft_strcmp(color, "c2") == 0)
+		return (ft_strdup(CY2));
+	else if (ft_strcmp(color, "c3") == 0)
+		return (ft_strdup(CY3));
+	else if (ft_strcmp(color, "bk2") == 0)
+		return (ft_strdup(BK2));
+	else if (ft_strcmp(color, "bl2") == 0)
+		return (ft_strdup(BL2));
+	else if (ft_strcmp(color, "m2") == 0)
+		return (ft_strdup(MG2));
+	else
+		return ((void *)0);
+}
+
+static int	delete_prompt(char *prompt[3])
+{
+	ft_strdel(&prompt[0]);
+	ft_strdel(&prompt[1]);
+	ft_strdel(&prompt[2]);
+	return (0);
+}
+
+int			sftsh(char ***envp)
+{
+	static t_term	*term;
+	t_command		*command;
+
+	if (!term)
+		term = create_term();
+	while (input(term))
+	{
+		if (ft_strncmp(term->prompt[0], "ps1=", 4) == 0)
+		{
+			ft_strdel(&term->prompt[1]);
+			term->prompt[1] = ft_strdup(&term->prompt[0][4]);
+		}
+		else if (ft_strncmp(term->prompt[0], "col=", 4) == 0)
+		{
+			ft_strdel(&term->prompt[2]);
+			term->prompt[2] = get_color(ft_strmap(&term->prompt[0][4], &ft_tolower));
+		}
+		else if ((command = parse(term->prompt[0], envp)))
+		{
+			if (sftsh_exec(command) == -42)
+				break ;
+		}
+	}
+	return (delete_prompt(term->prompt));
+}

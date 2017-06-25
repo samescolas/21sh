@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_intmin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/11 20:17:48 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/11 20:18:11 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strdel(char **as)
+int		ft_intmin(int a, int b)
 {
-	char **ptr;
-
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
+	return (a < b ? a : b);
 }

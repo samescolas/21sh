@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/02 19:18:39 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/30 10:09:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../libft/libft.h"
+#include "sftsh_types.h"
 
-void	ft_strdel(char **as)
+int			sftsh_env(t_command *command)
 {
-	char **ptr;
+	char	***envp;
+	int		i;
 
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
+	envp = command->envp;
+	i = -1;
+	while ((*envp)[++i])
+	{
+		ft_putendl((*envp)[i]);
+		write(1, "\r", 1);
+	}
+	return (0);
 }

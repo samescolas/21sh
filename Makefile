@@ -1,31 +1,46 @@
-NAME = minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sescolas <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/05/29 16:16:10 by sescolas          #+#    #+#              #
+#    Updated: 2017/06/23 10:11:52 by sescolas         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-HEADER = includes/minishell.h
-
-SRCS = $(wildcard srcs/*.c$)
-
-OBJS = $(subst srcs/,.objs/,$(SRCS:.c=.o))
-
-LIBFT = libft/libft.a
-
-LIB_DEPS = $(wildcard libft/*.c$)
+NAME = 21sh
 
 CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
-LINK = -L libft -lft
+LIBFT = libft/libft.a
+LIB_DEPS = $(shell ls  libft/*.c)
+
+TO_LINK = ft termcap
+LINK = -L libft $(foreach LIB,$(TO_LINK), -l$(LIB))
+
+HEADERS = $(wildcard includes/*.h$)
+SRC_DIRS = build builtins input lexer types utils
+SRCS = $(foreach DIR,$(SRC_DIRS), $(addprefix ,$(wildcard srcs/$(DIR)/*.c$)))
+OBJS = $(notdir $(SRCS:.c=.o))
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(HEADER)
+$(NAME) : $(OBJS)
 	$(CC) .objs/*.o $(LINK) -o $@
 
-.objs/%.o : srcs/%.c $(LIBFT)
-	$(CC) -I includes -c -o $@ $<
+$(OBJS) : $(SRCS) $(HEADERS) $(LIBFT)
+	$(CC) $(CFLAGS) -Iincludes -c $(shell find . -name $(notdir $(@:.o=.c))) -o .objs/$@
 
 $(LIBFT) : $(LIB_DEPS)
 	make -C libft
 
-.PHONY : clean fclean re
+.PHONY : clean fclean re print
+
+print :
+	@echo $(OBJS)
 
 clean :
 	rm -f libft/*\.o$

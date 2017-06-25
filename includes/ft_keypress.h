@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_keypress.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/31 16:42:33 by sescolas          #+#    #+#             */
+/*   Updated: 2017/06/24 14:56:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_KEYPRESS_H
+# define FT_KEYPRESS_H
 
-void	ft_strdel(char **as)
-{
-	char **ptr;
+typedef struct s_sess	t_sess;
 
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
-}
+int		ft_backspace(t_sess *sess);
+int		ft_arrowkeys(int c, t_sess *sess);
+//int		ft_delete(char **line, t_term *term);
+int		ft_printable(char c, t_sess *sess);
+//int		ft_escape(char **line, t_term *term);
+
+#endif

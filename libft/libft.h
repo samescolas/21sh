@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 15:24:45 by sescolas          #+#    #+#             */
-/*   Updated: 2017/04/13 12:10:06 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/05/15 10:51:47 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_intmin(int a, int b);
+int					ft_intmax(int a, int b);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 int					ft_countwords(const char *s, char c);
@@ -65,6 +67,7 @@ void				ft_putstr(const char *s);
 void				ft_putstr_fd(const char *s, int fd);
 int					ft_sqrt(int n);
 void				ft_strarrmap(char **arr, char *(*f)(char *));
+void				ft_strarrdel(char ***arr);
 char				*ft_strcat(char *s1, const char *s2);
 int					ft_strcount(char *str, char c);
 char				*ft_strchr(const char *s, int c);
@@ -73,6 +76,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strcpy(char *dst, const char *src);
 void				ft_strdel(char **as);
 char				*ft_strdup(const char *s1);
+char				*ft_strndup(const char *s1, int n);
 int					ft_strequ(const char *s1, const char *s2);
 int					ft_strfind(char *str, char c);
 void				ft_striter(char *s, void (*f)(char *));
@@ -95,7 +99,7 @@ char				**ft_strsplit(const char *s, char c);
 char				*ft_strstr(const char *big, const char *little);
 char				*ft_strsub(const char *s, unsigned int start, size_t len);
 char				*ft_strtrim(const char *s);
-int					ft_tolower(int c);
+char				ft_tolower(char c);
 char				ft_toupper(char c);
 
 #endif

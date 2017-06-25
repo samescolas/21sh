@@ -6,7 +6,7 @@
 #    By: sescolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/13 09:59:58 by sescolas          #+#    #+#              #
-#    Updated: 2017/02/28 18:32:25 by sescolas         ###   ########.fr        #
+#    Updated: 2017/05/14 18:24:26 by sescolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRCS = 	$(wildcard *.c)
 
 OBJS = $(SRCS:.c=.o)
 
+CFLAGS = -Wall -Wextra -Werror
+
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADER)
@@ -27,10 +29,6 @@ $(NAME): $(OBJS) $(HEADER)
 $(OBJS): $(SRCS) $(HEADER)
 
 .PHONY: clean fclean re
-
-print: $(SRCS)
-	lpr -p $?
-	touch print
 
 clean:
 	rm -f *.o

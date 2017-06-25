@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   t_coord.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 08:25:18 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:51:42 by sescolas         ###   ########.fr       */
+/*   Created: 2017/05/31 08:51:35 by sescolas          #+#    #+#             */
+/*   Updated: 2017/05/31 09:54:56 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "sftsh_types.h"
+#include "sftsh_utils.h"
 
-void	ft_strdel(char **as)
+t_coord		*create_coord(size_t x, size_t y)
 {
-	char **ptr;
+	t_coord		*ret;
 
-	if (!as || !*as)
-		return ;
-	ptr = as;
-	ft_bzero(*as, ft_strlen(*as));
-	free(*as);
-	*ptr = NULL;
+	if (!(ret = (t_coord *)malloc(sizeof(t_coord))))
+		ft_fatal("sftsh: err: out of memory\n");
+	ret->x = x;
+	ret->y = y;
+	return (ret);
 }
