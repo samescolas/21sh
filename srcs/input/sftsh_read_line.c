@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/25 11:36:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/25 12:06:39 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,7 @@ void		resize_buffer(char **line, size_t len)
 	ft_strdel(line);
 	*line = tmp;
 }
-/*
-static int ft_keypress(int c, t_sess *sess)
-{
-	if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
-		resize_buffer(&sess->input_text, sess->input_len);
-	if (ft_isprint(c))
-		return (ft_printable(c, sess));
-	else if (c == 127 && sess->input_len > 0)
-		return (ft_backspace(sess));
-	else if (c == 127)
-		return (0);
-	else if (IS_ARROWKEY(c))
-		return (ft_arrowkeys(c, sess));
-	else if (c == KEY_ESCAPE)
-		return (enter_vim_mode(sess));
-	else if (c == KEY_HOME)
-		while (sess->cursor->x != 0)
-			ft_arrowkeys(KEY_LEFT, sess);
-	else if (c == KEY_END)
-		while (sess->cursor->x < sess->input_len)
-			ft_arrowkeys(KEY_RIGHT, sess);
-	else
-		write(1, &c, 1);
-	return (0);
-}
-*/
+
 void	reset_sess(t_sess *sess) 
 {
 	sess->cursor->x = 0;

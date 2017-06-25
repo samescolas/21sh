@@ -6,11 +6,24 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 09:26:41 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/25 11:25:32 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/25 12:08:18 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sftsh_read_line.h"
+
+static int	get_arrow(int key)
+{
+	if (key == 'A')
+		return (KEY_UP);
+	else if (key == 'B')
+		return (KEY_DOWN);
+	else if (key == 'C')
+		return (KEY_RIGHT);
+	else if (key == 'D')
+		return (KEY_LEFT);
+	return ('\0');
+}
 
 static int get_esckey(void)
 {
@@ -21,14 +34,8 @@ static int get_esckey(void)
 	{
 		if (ret == '[' && read(STDIN_FILENO, &ret, 1) > 0)
 		{
-			if (ret == 'A')
-				return (KEY_UP);
-			else if (ret == 'B')
-				return (KEY_DOWN);
-			else if (ret == 'C')
-				return (KEY_RIGHT);
-			else if (ret == 'D')
-				return (KEY_LEFT);
+			if (ret >= 'A' && ret <= 'D')
+				return (get_arrow(ret));
 			else if (ret == 'H')
 				return (KEY_HOME);
 			else if (ret == 'F')
