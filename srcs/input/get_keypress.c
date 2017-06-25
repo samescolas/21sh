@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 09:26:41 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/23 14:33:50 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/25 11:25:32 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ static int get_esckey(void)
 				return (KEY_HOME);
 			else if (ret == 'F')
 				return (KEY_END);
+			else if (ret == '3')
+			{
+				if (read(STDIN_FILENO, &ret, 1) > 0 && ret == '~')
+					return (KEY_DEL);
+				else
+					return (ret);
+			}
 			else
 				return (ret);
 		}

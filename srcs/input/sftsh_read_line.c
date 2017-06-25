@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/25 08:58:25 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/25 11:36:03 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		resize_buffer(char **line, size_t len)
 	ft_strdel(line);
 	*line = tmp;
 }
-
+/*
 static int ft_keypress(int c, t_sess *sess)
 {
 	if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
@@ -51,7 +51,7 @@ static int ft_keypress(int c, t_sess *sess)
 		write(1, &c, 1);
 	return (0);
 }
-
+*/
 void	reset_sess(t_sess *sess) 
 {
 	sess->cursor->x = 0;
@@ -84,6 +84,47 @@ static int	read_line(t_sess *sess)
 }
 */
 
+/*
+** Displays updated sesssion. Returns 0 on success.
+*/
+static int render_keypress(int key, t_sess *sess)
+{
+	if (ft_isprint(key))
+		return (render_printable(sess));
+	else if (IS_ARROWKEY(key))
+		return (render_arrowkey(key));
+	else if (key == KEY_HOME || key == KEY_END)
+		return (render_home_end(key, sess));
+	else if (key == KEY_BKSPC)
+		return (render_bkspc());
+	else if (key == KEY_DEL)
+		return (render_del(sess));
+	return (0); // this should probably actually be a 1
+}
+/*
+** Updates session based on pressed key.
+*/
+static int process_keypress(int key, t_sess *sess)
+{
+	if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
+		resize_buffer(&sess->input_text, sess->input_len);
+	if (ft_isprint(key))
+		return (update_printable(key, sess));
+	else if (IS_ARROWKEY(key))
+		return (update_arrowkey(key, sess));
+	else if (key == KEY_HOME || key == KEY_END)
+		return (update_home_end(key, sess));
+	else if (key == KEY_BKSPC && sess->input_len > 0)
+		return (update_bkspc(sess));
+	else if (key == KEY_DEL && sess->input_len > 0)
+		return (update_del(sess));
+	else
+		write(1, &key, 1);
+
+	return (0); // this shoulr probably really be a 1
+
+}
+
 int		get_command_str(t_sess*sess)
 {
 	int key;
@@ -91,8 +132,18 @@ int		get_command_str(t_sess*sess)
 	reset_sess(sess);
 	while ((key = get_keypress()) != KEY_ENTER)
 	{
-		if (ft_keypress(key, sess) != 0)
-			return (0);
+		if (key == KEY_ESCAPE)
+		{
+			if (enter_vim_mode(sess) != 0)
+				return (1);
+		}
+		else if (process_keypress(key, sess) == 0)
+		{
+			if (render_keypress(key, sess) != 0)
+				return (1);
+		}
+		//if (ft_keypress(key, sess) != 0)
+		//	return (0);
 	}
 	return (0);
 	/*
