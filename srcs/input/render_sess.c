@@ -6,20 +6,84 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/25 11:38:13 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/27 15:34:03 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_termcap.h"
 #include "sftsh_read_line.h"
 #include "sftsh_types.h"
+#include "../../libft/libft.h"
+#include <stdio.h>
 
+static void	update_position(t_sess *sess, int cm)
+{
+	if (cm > 0)
+	{
+		sess->cursor->y += ((sess->cursor->x + cm) / sess->term_width);
+		sess->cursor->x = (sess->cursor->x + cm) % sess->term_width;
+	}
+	else
+	{
+		if (sess->cursor->x + cm > 0)
+			sess->cursor->x = sess->cursor->x += cm;
+		else
+		{
+			sess->cursor->y = 1 +
+				((-1 * (sess->cursor->x + cm)) / sess->term_width);
+			sess->cursor->x = sess->term_width -
+				((-1 * (sess->cursor->x + cm)) % sess->term_width);
+		}
+	}
+}
+
+int		render_printable(t_sess *sess, int cm)
+{
+	ft_move_cursor(K_UP, sess->cursor->y);
+	ft_move_cursor(K_LEFT, sess->cursor->x);
+	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
+	ft_putstr(sess->input_text);
+	ft_move_cursor(K_UP, sess->cursor->y);
+	write(1, "\r", 1);	
+	update_position(sess, cm);
+	ft_move_cursor(K_DOWN, sess->cursor->y);
+	ft_move_cursor(K_RIGHT, sess->cursor->x);
+	return (0);
+}
+/*
 int		render_printable(t_sess *sess)
 {
-	ft_move_cursor(K_LEFT, sess->cursor->x + 1);
-	write(1, sess->input_text, sess->input_len);
-	ft_move_cursor(K_LEFT, sess->input_len - sess->cursor->x);
+	int		len;
+	int		ix;
+	
+	len = sess->input_len + ft_strlen(sess->prompt_str);
+	ix = len;
+	ft_move_cursor(K_UP, len / sess->term_width);
+	write(1, "\r", 1);
+	while (ix--)
+		write(1, " ", 1);
+	write(1, "\r", 1);
+	ft_move_cursor(K_UP, len / sess->term_width);
+	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
+	ft_putstr(sess->input_text);
+	ft_move_cursor(K_UP, len / sess->term_width);
+	write(1, "\r", 1);
+	ft_move_cursor(K_DOWN, sess->cursor->x / sess->term_width);
+	write(1, "\r", 1);
+	ft_move_cursor(K_RIGHT, sess->cursor->x % sess->term_width);
 	return (0);
+}
+
+void	clear_screen(t_sess *sess)
+{
+	int		len;
+	int		i;
+
+	len = ft_strlen(sess->prompt_str) + sess->input_len + 1;
+	ft_move_cursor(K_UP, len / sess->term_width);
+	i = len;
+	while (i--)
+		write(1, " ", 1);
 }
 
 int		render_arrowkey(int key)
@@ -65,3 +129,4 @@ int		render_del(t_sess *sess)
 	ft_move_cursor(K_LEFT, sess->input_len - sess->cursor->x + 1);
 	return (0);
 }
+*/

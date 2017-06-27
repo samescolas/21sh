@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 10:03:22 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/24 17:04:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/25 14:13:10 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <termcap.h>
+# include <sys/ioctl.h>
 
 # define CL tgetstr("cl", (void *)0)
 # define CM tgetstr("cm", (void *)0)

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:45:53 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/24 17:08:25 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/25 12:38:14 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int			ft_vimkeys(char c, char **line, t_term *term)
 			return (0);
 	return (1);
 }
-*/
 int		enter_vim_mode(t_sess *sess)
 {
 	int		key;
@@ -107,7 +106,7 @@ int		enter_vim_mode(t_sess *sess)
 	}
 	return (0);
 }
-/*
+
 int		enter_vim_mode(char **line, t_term *term)
 {
 	char	c;

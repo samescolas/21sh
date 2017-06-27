@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/25 11:35:54 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/27 11:14:59 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ static const int KEY_DEL = 1725;
 typedef struct	s_sess
 {
 	char	*input_text;
+	int		input_ix;
 	size_t	input_lines;
 	size_t	input_len;
+	size_t	term_width;
+	size_t	term_height;
 	char	*clipboard;
 	char	*prompt_str;
 	char	*prompt_color;
@@ -48,16 +51,27 @@ int				get_command_str(t_sess *sess);
 int				enter_vim_mode(t_sess *sess);
 t_sess			*create_sess(void);
 
+size_t			get_term_width(void);
+size_t			get_term_height(void);
+
 int				update_arrowkey(int key, t_sess *sess);
 int				update_printable(int key, t_sess *sess);
 int				update_home_end(int key, t_sess *sess);
 int				update_bkspc(t_sess *sess);
 int				update_del(t_sess *sess);
+
+int				is_vimarrow(int key);
+int				update_vimarrow(int key, t_sess *sess);
+int				update_vimword(int key, t_sess *sess);
+int				render_vimarrow(int key);
+int				render_vimword(t_sess *sess);
+
 int				render_arrowkey(int key);
-int				render_printable(t_sess *sess);
+int				render_printable(t_sess *sess, int cm);
 int				render_home_end(int key, t_sess *sess);
 int				render_bkspc(void);
 int				render_del(t_sess *sess);
+
 
 //int				read_line(t_term *term);
 //void			resize_buffer(char **line, t_term *term);
