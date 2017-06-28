@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/26 12:38:56 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/27 17:56:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,8 @@ int		update_printable(int key, t_sess *sess)
 	}
 	++(sess->input_ix);
 	++(sess->input_len);
-	return (0);
+	return (1);
 }
-/*
-int		update_printable(int key, t_sess *sess)
-{
-	char	*input;
-	int		i;
-	int		len;
-	int		prompt_len;
-
-	input = sess->input_text;
-	prompt_len = ft_strlen(sess->prompt_str) + 1;
-	if (sess->input_len + prompt_len == sess->cursor->x)
-		input[sess->input_len] = key;
-	else
-	{
-		len = ft_strlen(&input[sess->cursor->x - prompt_len]);
-		i = -1;
-		while (++i < len)
-			ft_memset(&input[sess->input_len - i],
-					input[sess->input_len - i - 1], 1);
-		ft_memset(&input[sess->cursor->x - prompt_len], key, 1);
-	}
-	++(sess->input_len);
-	++(sess->cursor->x);
-	return (0);
-}
-*/
 /*
 int		update_bkspc(t_sess *sess)
 {
@@ -115,25 +89,39 @@ int		update_del(t_sess *sess)
 /*
 ** Need to update this to work for multiline stuff.
 */
-/*
+
 int		update_arrowkey(int key, t_sess *sess)
 {
-	if (key == KEY_LEFT && sess->cursor->x > 0)
-		--(sess->cursor->x);
-	else if (key == KEY_RIGHT && sess->cursor->x < sess->input_len)
-		++(sess->cursor->x);
-	else if (key == KEY_UP)
-	{
+	int		len;
+	int		num_lines;
 
-	}
-	else if (key == KEY_DOWN)
+	len = ft_strlen(sess->prompt_str) + 1 + sess->input_len;
+	num_lines = len / sess->term_width;
+	if (key == KEY_LEFT)
 	{
+		if ((sess->cursor->y == 0 && sess->cursor->x > ft_strlen(sess->prompt_str) + 1) ||
+			sess->cursor->y > 0)
+			return (-1);
 	}
-	else
+	else if (key == KEY_RIGHT)
+	{
+		if ((int)sess->cursor->y != num_lines ||
+				sess->cursor->x < len % sess->term_width)
 		return (1);
+	}
+	else if (key == KEY_UP && sess->cursor->y > 0)
+	{
+		return (-1 * (int)sess->term_width);
+	}
+	else if (key == KEY_DOWN && (int)sess->cursor->y < num_lines)
+	{
+		if ((int)sess->cursor->y + 1 == num_lines && sess->cursor->x > len % sess->term_width)
+			return (sess->term_width - sess->cursor->x + (len % sess->term_width));
+		return (sess->term_width);
+	}
 	return (0);
 }
-
+/*
 int		update_home_end(int key, t_sess *sess)
 {
 	int		len;

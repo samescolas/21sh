@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/27 15:34:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/27 17:47:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 #include "sftsh_read_line.h"
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
-#include <stdio.h>
 
 static void	update_position(t_sess *sess, int cm)
 {
+	if (cm < 0 && (cm * -1) % sess->term_width == 0)
+	{
+		sess->cursor->y -= ((-1 * cm) / sess->term_width);
+		return ;
+	}
+	else if (cm >= 0 && cm % sess->term_width == 0)
+	{
+		sess->cursor->y += cm / sess->term_width;
+		return ;
+	}
 	if (cm > 0)
 	{
 		sess->cursor->y += ((sess->cursor->x + cm) / sess->term_width);
@@ -25,25 +34,28 @@ static void	update_position(t_sess *sess, int cm)
 	}
 	else
 	{
-		if (sess->cursor->x + cm > 0)
-			sess->cursor->x = sess->cursor->x += cm;
+		if ((int)sess->cursor->x + cm >= 0)
+			sess->cursor->x = (int)sess->cursor->x + cm;
 		else
 		{
-			sess->cursor->y = 1 +
-				((-1 * (sess->cursor->x + cm)) / sess->term_width);
+			sess->cursor->y = sess->cursor->y - 1 - ((int)((-1 * cm) / sess->term_width));
 			sess->cursor->x = sess->term_width -
-				((-1 * (sess->cursor->x + cm)) % sess->term_width);
+				((-1 * cm) % sess->term_width);
 		}
 	}
 }
 
-int		render_printable(t_sess *sess, int cm)
+int		render(t_sess *sess, int cm)
 {
+	int		len;
+
+	len = sess->input_len + ft_strlen(sess->prompt_str);
 	ft_move_cursor(K_UP, sess->cursor->y);
 	ft_move_cursor(K_LEFT, sess->cursor->x);
 	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
 	ft_putstr(sess->input_text);
-	ft_move_cursor(K_UP, sess->cursor->y);
+	ft_move_cursor(K_UP, len / sess->term_width);
+	//ft_move_cursor(K_UP, sess->cursor->y);
 	write(1, "\r", 1);	
 	update_position(sess, cm);
 	ft_move_cursor(K_DOWN, sess->cursor->y);

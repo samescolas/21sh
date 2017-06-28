@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/27 11:14:59 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/27 15:36:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				render_vimarrow(int key);
 int				render_vimword(t_sess *sess);
 
 int				render_arrowkey(int key);
-int				render_printable(t_sess *sess, int cm);
+int				render(t_sess *sess, int cm);
 int				render_home_end(int key, t_sess *sess);
 int				render_bkspc(void);
 int				render_del(t_sess *sess);
