@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/27 15:44:56 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 10:42:08 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ static int process_keypress(int key, t_sess *sess)
 		return (update_printable(key, sess));
 	else if (IS_ARROWKEY(key))
 		return (update_arrowkey(key, sess));
-	return (0);
-	/*
 	else if (key == KEY_HOME || key == KEY_END)
 		return (update_home_end(key, sess));
-	else if (key == KEY_BKSPC && sess->input_len > 0)
+	else if (key == KEY_BKSPC && sess->input_ix > 0)
 		return (update_bkspc(sess));
+	return (0);
+	/*
 	else if (key == KEY_DEL && sess->input_len > 0)
 		return (update_del(sess));
 	else
