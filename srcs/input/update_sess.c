@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 15:15:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 15:31:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,25 @@ int		update_bkspc(t_sess *sess)
 	--(sess->input_ix);
 	return (-1);
 }
-/*
-int		update_bkspc(t_sess *sess)
+
+int		update_del(t_sess *sess)
 {
 	int		i;
 	int		len;
-	int		prompt_len;
-	char	*input;
 
-	input = sess->input_text;
-	prompt_len = ft_strlen(sess->prompt_str) + 1;
-	ft_move_cursor(K_LEFT, 1);
-	write(1, " ", 1);
-	if (sess->input_len + prompt_len  == sess->cursor->x)
-		input[sess->cursor->x - 1 - prompt_len] = '\0';
-	else
-	{
-		len = ft_strlen(&input[sess->cursor->x - prompt_len]);
-		i = -1;
-		while (++i < len)
-			ft_memset(&input[sess->cursor->x + i - prompt_len],
-					input[sess->cursor->x + i + 1 - prompt_len], 1);
-		input[sess->cursor->x - 1 - prompt_len] = '\0';
-	}
-	--(sess->cursor->x);
+	if (sess->input_ix == (int)sess->input_len)
+		return (0);
+	len = ft_strlen(&sess->input_text[sess->input_ix]);
+	i = -1;
+	while (++i < len)
+		ft_memset(&sess->input_text[sess->input_ix + i],
+				sess->input_text[sess->input_ix + i + 1], 1);
+	sess->input_text[sess->input_len - 1] = '\0';
 	--(sess->input_len);
 	return (0);
 }
 
+/*
 int		update_del(t_sess *sess)
 {
 	int		len;
