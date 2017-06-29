@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 16:53:16 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 17:07:35 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int		update_bkspc(t_sess *sess)
 	int		len;
 	int		i;
 
+	if (sess->input_text[sess->input_len - 1] == '\n')
+		--(sess->input_lines);
 	if (sess->input_len == 0)
 		return (0);
 	if (sess->input_ix == (int)sess->input_len)
@@ -76,6 +78,8 @@ int		update_del(t_sess *sess)
 	int		i;
 	int		len;
 
+	if (sess->input_text[sess->input_ix] == '\n')
+		--(sess->input_lines);
 	if (sess->input_ix == (int)sess->input_len)
 		return (0);
 	len = ft_strlen(&sess->input_text[sess->input_ix]);

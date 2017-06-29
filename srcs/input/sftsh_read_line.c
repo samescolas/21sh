@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 16:42:04 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 17:17:38 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		get_command_str(t_sess *sess)
 			//if (enter_vim_mode(sess) != 0)
 				return (1);
 		}
-		else if (key == KEY_ENTER && !valid_brackets(sess->input_text) && !valid_quotes(sess->input_text))
+		else if (key == KEY_ENTER && valid_brackets(sess->input_text) == 1 && valid_quotes(sess->input_text) == 1)
 				break ;
 		else if (key != '\0' && render(sess, process_keypress(key, sess)) != 0)
 			return (1);
