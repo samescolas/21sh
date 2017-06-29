@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 15:36:04 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 17:00:30 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,15 @@ int		render(t_sess *sess, int cm)
 	ft_putstr(sess->input_text);
 	if (cm <= 0)
 		clear_screen(cm * -1);
-	ft_move_cursor(K_UP, len / sess->term_width);
+	ft_move_cursor(K_UP, (len / sess->term_width) + sess->input_lines);
 //	ft_move_cursor(K_UP, sess->cursor->y);
 	write(1, "\r", 1);
 	update_position(sess, cm);
 	ft_move_cursor(K_DOWN, sess->cursor->y);
+	//ft_move_cursor(K_RIGHT, sess->cursor->x);
+	len = ft_strrchr(sess->input_text, '\0') - ft_strrchr(sess->input_text, '\n') - 1;
+	if (len < (int)sess->term_width && len > 0)
+		sess->cursor->x = len;
 	ft_move_cursor(K_RIGHT, sess->cursor->x);
 	return (0);
 }

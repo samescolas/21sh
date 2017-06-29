@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:53:15 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/01 10:15:32 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 15:51:08 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		ft_makeraw(void)
 	reset_terminal_settings(&settings);
 	settings.c_iflag &= ~(ICRNL | IXON);
 	//settings.c_oflag &= ~(OPOST); /* This is the carriage return flag. */
-	settings.c_lflag &= ~(ECHO | ICANON | IEXTEN);
+	settings.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
 	settings.c_cc[VMIN] = 0;
 	settings.c_cc[VTIME] = 1;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &settings) == -1)

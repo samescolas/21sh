@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 15:31:49 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 16:53:16 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ int		update_printable(int key, t_sess *sess)
 	int	len;
 	int	i;
 
+	if (key == '\n')
+	{
+		++(sess->input_lines);
+		sess->input_text[(sess->input_ix)++] = '\n';
+		++(sess->input_len);
+		if (sess->cursor->y == 0)
+			return (sess->term_width - ft_strlen(sess->prompt_str) - sess->input_len);
+		return (sess->term_width);
+	}
 	if (sess->input_ix == (int)sess->input_len)
 		sess->input_text[sess->input_ix] = (char)key;
 	else

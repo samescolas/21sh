@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 09:26:41 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/27 18:24:27 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 16:08:48 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,12 @@ int			get_keypress(void)
 	{
 		if (ret == 27)
 			return (get_esckey());
-		else if (ret == 10 || ret == 13)
+		else if (ret == 13)// || ret == 13)
 			return (KEY_ENTER);
+		else if (ret == '^')
+			write(1, "CTRL", 4);
+		else if (ret > 31 && ret < 127)
+			return (ret);
 		else
 			return ((int)ret);
 	}
