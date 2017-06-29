@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 17:00:30 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/06/28 17:04:11 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		render(t_sess *sess, int cm)
 	ft_move_cursor(K_DOWN, sess->cursor->y);
 	//ft_move_cursor(K_RIGHT, sess->cursor->x);
 	len = ft_strrchr(sess->input_text, '\0') - ft_strrchr(sess->input_text, '\n') - 1;
-	if (len < (int)sess->term_width && len > 0)
+	if (len < (int)sess->term_width && len >= 0)
 		sess->cursor->x = len;
 	ft_move_cursor(K_RIGHT, sess->cursor->x);
 	return (0);
