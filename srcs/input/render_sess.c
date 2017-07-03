@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 17:04:11 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/02 15:16:39 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,44 @@ static void	clear_screen(int cm)
 		ft_putchar(8);
 }
 
+static int	redraw(t_sess *sess, int cm)
+{
+	int		lines;
+	int		len;
+	int		i;
+
+	ft_move_cursor(K_UP, sess->cursor->y);
+	ft_move_cursor(K_LEFT, sess->cursor->x);
+	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
+	len = ft_strlen(sess->prompt_str) + 1;
+	lines = 0;
+	i = -1;
+	while (sess->input_text[++i])
+	{
+		write(1, &sess->input_text[i], 1);
+		if (++len == (int)sess->term_width || sess->input_text[i] == '\n')
+		{
+			len = 0;
+			++lines;
+		}
+	}
+	if (cm <= 0)
+		clear_screen(cm * -1);
+	return (lines);
+}
+
 int		render(t_sess *sess, int cm)
 {
 	int		len;
 
-	len = sess->input_len + ft_strlen(sess->prompt_str);
-	ft_move_cursor(K_UP, sess->cursor->y);
-	ft_move_cursor(K_LEFT, sess->cursor->x);
-	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
-	ft_putstr(sess->input_text);
-	if (cm <= 0)
-		clear_screen(cm * -1);
-	ft_move_cursor(K_UP, (len / sess->term_width) + sess->input_lines);
-//	ft_move_cursor(K_UP, sess->cursor->y);
+	len = redraw(sess, cm);
+	ft_move_cursor(K_UP, len);
 	write(1, "\r", 1);
 	update_position(sess, cm);
 	ft_move_cursor(K_DOWN, sess->cursor->y);
-	//ft_move_cursor(K_RIGHT, sess->cursor->x);
 	len = ft_strrchr(sess->input_text, '\0') - ft_strrchr(sess->input_text, '\n') - 1;
-	if (len < (int)sess->term_width && len >= 0)
-		sess->cursor->x = len;
+	//if (len < (int)sess->term_width && len >= 0)
+	//	sess->cursor->x = len;
 	ft_move_cursor(K_RIGHT, sess->cursor->x);
 	return (0);
 }

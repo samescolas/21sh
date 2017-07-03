@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/02 13:19:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/02 14:28:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ int		update_printable(int key, t_sess *sess)
 {
 	int	len;
 
+	if (key == 'p')
+	{
+		ft_putstr("(");
+		ft_putnbr(sess->cursor->x);
+		ft_putstr(", ");
+		ft_putnbr(sess->cursor->y);
+		ft_putstr(", ");
+		ft_putnbr(sess->input_lines);
+		ft_putstr(")\n");
+		exit(1);
+	}
 	if (key == '\n')
 	{
 		++(sess->input_lines);
@@ -58,6 +69,8 @@ int		update_bkspc(t_sess *sess)
 	{
 		len = ft_strlen(&sess->input_text[sess->input_ix]);
 		ft_memmove(&sess->input_text[sess->input_ix], &sess->input_text[sess->input_ix + 1], len);
+		if (sess->input_text[sess->input_len - 1] == '\n')
+			--sess->input_lines;
 		sess->input_text[sess->input_len - 1] = '\0';
 	}
 	--(sess->input_len);
