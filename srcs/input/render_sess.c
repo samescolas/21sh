@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/02 15:16:39 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 11:05:51 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static int	redraw(t_sess *sess, int cm)
 	int		i;
 
 	ft_move_cursor(K_UP, sess->cursor->y);
-	ft_move_cursor(K_LEFT, sess->cursor->x);
+	write(1, "\r", 1);
 	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
-	len = ft_strlen(sess->prompt_str) + 1;
+	len = ft_strlen(sess->prompt_str);
 	lines = 0;
 	i = -1;
 	while (sess->input_text[++i])
