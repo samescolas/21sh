@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/02 14:28:20 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:04:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,22 @@
 #include "../../libft/libft.h"
 #include "ft_termcap.h"
 
-/*
-** Direct memset because my memmove is terribly inefficient.
-*/
-int		update_printable(int key, t_sess *sess)
+int			update_printable(int key, t_sess *sess)
+{
+	if (sess->input_ix == sess->input_text[sess->input_line]->len)
+		sess->input_text[sess->input_line][(sess->input_ix)++] = (char)key;
+	else
+	{
+		ft_memmove(&sess->input_text[sess->input_line][sess->input_ix + 1],
+			&sess->input_text[sess->input_line][sess->input_ix], 1);
+		sess->input_text[sess->input_line][(sess->input_ix)++] = (char)key;
+	}
+	++(sess->input_text[sess->input_line]->len);
+	++(sess->input_len);
+	return (1);
+}
+
+/*int		update_printable(int key, t_sess *sess)
 {
 	int	len;
 
@@ -93,9 +105,6 @@ int		update_del(t_sess *sess)
 	return (0);
 }
 
-/*
-** Need to update this to work for multiline stuff.
-*/
 int		update_arrowkey(int key, t_sess *sess)
 {
 	int		len;
@@ -125,7 +134,7 @@ int		update_arrowkey(int key, t_sess *sess)
 	sess->input_ix += ret;
 	return (ret);
 }
-/*
+
 int		update_home_end(int key, t_sess *sess)
 {
 	int		len;
@@ -137,7 +146,6 @@ int		update_home_end(int key, t_sess *sess)
 		sess->cursor->x = sess->input_len + len;
 	return (0);
 }
-*/
 
 int		update_home_end(int key, t_sess *sess)
 {
@@ -159,3 +167,4 @@ int		update_home_end(int key, t_sess *sess)
 		return (sess->cursor->x);
 	}
 }
+*/
