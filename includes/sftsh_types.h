@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/23 10:12:32 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 17:19:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
+typedef struct			s_string
+{
+	char				*text;
+	int					len;
+}
 
 typedef struct			s_command
 {
