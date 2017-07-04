@@ -6,7 +6,7 @@
 /*   By: sescolas <sescolas@student.42.us.org       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/22 09:45:31 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/26 12:02:33 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 17:30:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ t_sess	*create_sess()
 
 	if ((ret = (t_sess *)malloc(sizeof(t_sess))))
 	{
-		ret->input_text = ft_strnew(0);
+		if (!(ret->input_text = (t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
+			ft_fatal("err: out of memory\n");
+		ret->input_text[0] = create_str(ft_strnew(0));
 		ret->input_ix = 0;
-		ret->input_lines = 0;
+		ret->input_line = 0;
+		ret->num_lines = 1;
+		ret->input_len = 0;
 		ret->clipboard = (void *)0;
 		ret->prompt_str = ft_strdup(DEFAULT_PROMPT);
 		ret->prompt_color = ft_strdup(DEFAULT_COLOR);
