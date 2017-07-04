@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 18:30:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:52:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,49 @@ int		update_del(t_sess *sess)
 	--(sess->input_len);
 	return (0);
 }
+*/
 
+int		update_arrowkey(int key, t_sess *sess)
+{
+	int	ret;
+
+	ret = 0;
+	if (key == KEY_LEFT && (sess->input_line > 0 || sess->input_ix > 0))
+	{
+		if (sess->input_ix == 0)
+			sess->input_ix = sess->input_text[--(sess->input_line)]->len;
+		else
+			sess->input_ix -= 1;
+		ret = -1;
+	}
+	else if (key == KEY_RIGHT && (sess->input_line + 1 < sess->num_lines ||
+			sess->input_ix < sess->input_text[sess->input_line]->len))
+	{
+		if (sess->input_ix == sess->input_text[sess->input_line]->len)
+		{
+			sess->input_ix = 0;
+			sess->input_line -= 1;
+		}
+		else
+			sess->input_ix += 1;
+		ret = 1;
+	}
+	else if (key == KEY_UP && sess->input_line > 0)
+	{
+		if (sess->input_text[--(sess->input_line)]->len < sess->input_ix)
+			sess->input_ix = sess->input_text[sess->input_line]->len;
+		ret = sess->term_width * -1;
+	}
+	else if (key == KEY_DOWN && (sess->input_line < sess->num_lines))
+	{
+		if (sess->input_text[++(sess->input_line)]->len < sess->input_ix)
+			sess->input_ix = sess->input_text[sess->input_line]->len;
+		ret = sess->term_width;
+	}
+	return  (ret);
+}
+
+/*
 int		update_arrowkey(int key, t_sess *sess)
 {
 	int		len;
