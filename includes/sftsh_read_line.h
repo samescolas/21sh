@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 16:19:47 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 17:29:17 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ static const int KEY_DEL = 1725;
 
 typedef struct	s_sess
 {
-	char	*input_text;
-	int		input_ix;
-	size_t	input_lines;
-	size_t	input_len;
-	size_t	term_width;
-	size_t	term_height;
-	char	*clipboard;
-	char	*prompt_str;
-	char	*prompt_color;
-	t_coord	*cursor;
+	t_string	**input_text;
+	int			input_ix;
+	int			input_line;
+	int			num_lines;
+	int			input_len;
+	int			term_width;
+	t_string	*clipboard;
+	t_string	*prompt_str;
+	t_string	*prompt_color;
+	t_coord		*cursor;
 }				t_sess;
 
 int				get_keypress(void);
