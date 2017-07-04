@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 16:56:37 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:21:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../libft/libft.h"
 #include "sftsh_vars.h"
 #include "sftsh_read_line.h"
+#include "sftsh_types.h"
 #include "sftsh_parser.h"
 #include "sftsh_exec.h"
 /*
@@ -50,13 +51,16 @@ static int	delete_prompt(char *prompt[3])
 }
 */
 
-static void	disp_input(char **input, int lines)
+static void	disp_input(t_string **input, int lines)
 { 
 	int		ix;
 
 	ix = -1;
 	while (++ix < lines)
-		ft_putendl(input[ix]);
+	{
+		write(1, input[ix]->text, input[ix]->len);
+		write(1, "\n", 1);
+	}
 }
 
 int			sftsh(char ***envp)
@@ -88,8 +92,6 @@ int			sftsh(char ***envp)
 		}
 		*/
 		disp_input(sess->input_text, sess->num_lines);
-		write(1, sess->input_text, sess->input_len);
-		write(1, "\n", 1);
 	}
 	return (1);
 	//return (delete_prompt(sess->prompt));

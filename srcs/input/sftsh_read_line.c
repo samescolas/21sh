@@ -6,12 +6,13 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 17:53:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:29:08 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "sftsh_read_line.h"
+#include "sftsh_utils.h"
 #include "sftsh_vars.h"
 #include "sftsh_types.h"
 #include "ft_keypress.h"
@@ -22,15 +23,15 @@ void		resize_buffer(t_string *str)
 	char	*tmp;
 
 	tmp = ft_strnew(str->len + BUFF_SIZE);
-	ft_strncpy(tmp, *line, len);
+	ft_strncpy(tmp, str->text, str->len);
 	ft_strdel(&str->text);
 	str->text = tmp;
 }
 
 void		resize_input(t_sess *sess)
 {
-	char	**tmp;
-	int		i;
+	t_string	**tmp;
+	int			i;
 
 	if (!(tmp = (t_string **)malloc(
 			(sess->num_lines + BUFF_LINES) * sizeof(t_string *))))
@@ -49,16 +50,16 @@ void	reset_sess(t_sess *sess)
 
 	i = -1;
 	while (++i < sess->num_lines)
-		ft_strdel(&sess->input_text[i]);
+		ft_strdel(&sess->input_text[i]->text);
 	free(sess->input_text);
-	if (!(sess->input_text = (char **)malloc((BUFF_LINES + 1) * sizeof(char *))))
+	if (!(sess->input_text = (t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
 		ft_fatal("err: out of memory\n");
 	sess->input_text[0] = create_str(ft_strnew(BUFF_SIZE));
 	sess->input_ix = 0;
 	sess->input_line = 0;
 	sess->num_lines = 1;
 	sess->input_len = 0;
-	sess->cursor->x = ft_strlen(sess->prompt_str) + 1;
+	sess->cursor->x = sess->prompt_str->len + 1;
 	sess->cursor->y = 0;
 }
 
@@ -120,7 +121,7 @@ int		get_command_str(t_sess *sess)
 	int key;
 
 	reset_sess(sess);
-	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
+	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
 	while ((key = get_keypress()) != '~')
 	{
 		if (!key)

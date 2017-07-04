@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 17:44:40 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:30:48 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 
 typedef struct s_coord	t_coord;
+typedef struct s_string	t_string;
 
 static const int KEY_BKSPC = 127;
 static const int KEY_ENTER = 1717;
@@ -40,6 +41,7 @@ typedef struct	s_sess
 	int			num_lines;
 	int			input_len;
 	int			term_width;
+	int			term_height;
 	t_string	*clipboard;
 	t_string	*prompt_str;
 	t_string	*prompt_color;

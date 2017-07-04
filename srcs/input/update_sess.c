@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 18:04:00 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:30:03 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 int			update_printable(int key, t_sess *sess)
 {
 	if (sess->input_ix == sess->input_text[sess->input_line]->len)
-		sess->input_text[sess->input_line][(sess->input_ix)++] = (char)key;
+		sess->input_text[sess->input_line]->text[(sess->input_ix)++] = (char)key;
 	else
 	{
-		ft_memmove(&sess->input_text[sess->input_line][sess->input_ix + 1],
-			&sess->input_text[sess->input_line][sess->input_ix], 1);
-		sess->input_text[sess->input_line][(sess->input_ix)++] = (char)key;
+		ft_memmove(&sess->input_text[sess->input_line]->text[sess->input_ix + 1],
+			&sess->input_text[sess->input_line]->text[sess->input_ix], 1);
+		sess->input_text[sess->input_line]->text[(sess->input_ix)++] = (char)key;
 	}
 	++(sess->input_text[sess->input_line]->len);
 	++(sess->input_len);

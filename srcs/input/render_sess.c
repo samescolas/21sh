@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 16:18:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:24:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void	move_right(t_sess *sess, int n)
 {
 	while (n--)
 	{
-		if (sess->cursor->x == sess->term_width - 1)
+		if ((int)sess->cursor->x == sess->term_width - 1)
 		{
 			sess->cursor->x = 0;
 			sess->cursor->y += 1;
@@ -163,28 +163,26 @@ static void	clear_screen(int cm)
 
 static int	redraw(t_sess *sess, int cm)
 {
-	int		lines;
-	int		len;
-	int		i;
+	int		offset;
+	int		line;
 
 	ft_move_cursor(K_UP, sess->cursor->y);
 	write(1, "\r", 1);
-	ft_padstr(sess->prompt_str, 1, sess->prompt_color);
-	len = ft_strlen(sess->prompt_str);
-	lines = 0;
-	i = -1;
-	while (sess->input_text[++i])
+	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
+	offset = 0;
+	line = -1;
+	while (++line < sess->num_lines)
 	{
-		write(1, &sess->input_text[i], 1);
-		if (++len == (int)sess->term_width || sess->input_text[i] == '\n')
-		{
-			len = 0;
-			++lines;
-		}
+		if (line == 0)
+			offset += (( sess->input_text[line]->len + sess->prompt_str->len) /
+					sess->term_width);
+		else
+			offset += (sess->input_text[line]->len / sess->term_width);
+		write(1, sess->input_text[line]->text, sess->input_text[line]->len);
 	}
 	if (cm <= 0)
 		clear_screen(cm * -1);
-	return (lines);
+	return (offset + sess->num_lines - 1);
 }
 
 int		render(t_sess *sess, int cm)

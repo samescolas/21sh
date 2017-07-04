@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 10:42:14 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/24 16:42:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:22:56 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
 #include "ft_keypress.h"
-
+/*
 int		ft_backspace(t_sess *sess)
 {
 	char	*line;
@@ -67,7 +67,7 @@ int		ft_arrowkeys(int c, t_sess *sess)
 	}
 	return (0);
 }
-/*
+
 int		ft_delete(char **line, t_term *term)
 {
 	int		len;
@@ -84,7 +84,7 @@ int		ft_delete(char **line, t_term *term)
 	return (1);
 }
 */
-
+/*
 int ft_printable(char c, t_sess *sess)
 {
 	int		len;
@@ -111,7 +111,7 @@ int ft_printable(char c, t_sess *sess)
 	}
 	return (0);
 }
-
+*/
 /*
 int		ft_escape(char **line, t_term *term)
 {

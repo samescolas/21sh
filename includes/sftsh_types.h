@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 17:19:00 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 18:27:13 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct			s_string
 {
 	char				*text;
 	int					len;
-}
+}						t_string;
 
 typedef struct			s_command
 {
@@ -38,6 +38,7 @@ typedef struct			s_coord
 	size_t				y;
 }						t_coord;
 
+t_string				*create_str(char *str);
 t_command				*create_command(char **args, char ***env, int num_args);
 t_coord					*create_coord(size_t z, size_t y);
 t_command				*pop_command(t_command **stack);
