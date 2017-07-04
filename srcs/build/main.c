@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/23 14:40:08 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/04 12:20:30 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int		main(int argc, char **argv, char **envp)
 
 	if (argc > 2 || argv[1])
 	{
-		/*
-		** read from file if one exists?
-		*/
+		// read from file if one exists?
 		write(2, "sftsh: please start shell and type stuff like a human\n", 51);
 		return (0);
 	}

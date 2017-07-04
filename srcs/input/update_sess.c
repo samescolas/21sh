@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/04 11:24:46 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/04 12:25:58 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,57 +17,13 @@
 
 int			update_printable(int key, t_sess *sess)
 {
-	if (sess->input_ix == sess->input_text[sess->input_line]->len)
-		sess->input_text[sess->input_line]->text[(sess->input_ix)++] = (char)key;
-	else
-	{
-		ft_memmove(&sess->input_text[sess->input_line]->text[sess->input_ix + 1],
-			&sess->input_text[sess->input_line]->text[sess->input_ix],
-			sess->input_text[sess->input_line]->len);
-		sess->input_text[sess->input_line]->text[(sess->input_ix)++] = (char)key;
-	}
-	sess->input_text[sess->input_line]->len += 1;
+	insert_str(sess->input_text[sess->input_line], (char)key, sess->input_ix);
 	sess->input_len += 1;
+	sess->input_ix += 1;
 	return (1);
 }
 
-/*int		update_printable(int key, t_sess *sess)
-{
-	int	len;
-
-	if (key == 'p')
-	{
-		ft_putstr("(");
-		ft_putnbr(sess->cursor->x);
-		ft_putstr(", ");
-		ft_putnbr(sess->cursor->y);
-		ft_putstr(", ");
-		ft_putnbr(sess->input_lines);
-		ft_putstr(")\n");
-		exit(1);
-	}
-	if (key == '\n')
-	{
-		++(sess->input_lines);
-		sess->input_text[(sess->input_ix)++] = '\n';
-		++(sess->input_len);
-		if (sess->cursor->y == 0)
-			return (sess->term_width - ft_strlen(sess->prompt_str) - sess->input_len);
-		return (sess->term_width);
-	}
-	if (sess->input_ix == (int)sess->input_len)
-		sess->input_text[sess->input_ix] = (char)key;
-	else
-	{
-		len = ft_strlen(&(sess->input_text[sess->input_ix]));
-		ft_memmove(&sess->input_text[sess->input_ix + 1], &sess->input_text[sess->input_ix], len);
-		ft_memset(&sess->input_text[sess->input_ix], (char)key, 1);
-	}
-	++(sess->input_ix);
-	++(sess->input_len);
-	return (1);
-}
-
+/*
 int		update_bkspc(t_sess *sess)
 {
 	int		len;
@@ -138,7 +94,7 @@ int		update_arrowkey(int key, t_sess *sess)
 			sess->input_ix = sess->input_text[sess->input_line]->len;
 		ret = sess->term_width * -1;
 	}
-	else if (key == KEY_DOWN && (sess->input_line < sess->num_lines))
+	else if (key == KEY_DOWN && (sess->input_line + 1 < sess->num_lines))
 	{
 		if (sess->input_text[++(sess->input_line)]->len < sess->input_ix)
 			sess->input_ix = sess->input_text[sess->input_line]->len;
