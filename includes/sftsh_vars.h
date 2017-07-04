@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 12:18:29 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/15 13:08:54 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 16:59:53 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <signal.h>
 
 # define MAX_PATHLEN 512
-# define BUFF_SIZE 32
+# define BUFF_SIZE 64
+# define BUFF_LINES 7
 
 # define DEFAULT_PROMPT "sftsh $"
 # define DEFAULT_COLOR "\x1B[94m"
