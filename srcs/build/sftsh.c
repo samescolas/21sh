@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/24 17:12:42 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 16:56:37 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ static int	delete_prompt(char *prompt[3])
 	return (0);
 }
 */
+
+static void	disp_input(char **input, int lines)
+{ 
+	int		ix;
+
+	ix = -1;
+	while (++ix < lines)
+		ft_putendl(input[ix]);
+}
+
 int			sftsh(char ***envp)
 {
 	//char	c;
@@ -77,6 +87,7 @@ int			sftsh(char ***envp)
 				break ;
 		}
 		*/
+		disp_input(sess->input_text, sess->num_lines);
 		write(1, sess->input_text, sess->input_len);
 		write(1, "\n", 1);
 	}
