@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 17:17:38 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 17:24:59 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,21 @@ void		resize_buffer(char **line, size_t len)
 
 void	reset_sess(t_sess *sess) 
 {
+	int		i;
+
+	i = -1;
+	while (++i < sess->num_lines)
+		ft_strdel(&sess->input_text[i]);
+	free(sess->input_text);
+	if (!(sess->input_text = (char **)malloc((BUFF_LINES + 1) * sizeof(char *))))
+		ft_fatal("err: out of memory\n");
+	sess->input_text[0] = create_str(ft_strnew(BUFF_SIZE));
+	sess->input_ix = 0;
+	sess->input_line = 0;
+	sess->num_lines = 1;
+	sess->input_len = 0;
 	sess->cursor->x = ft_strlen(sess->prompt_str) + 1;
 	sess->cursor->y = 0;
-	sess->input_len = 0;
-	sess->input_lines = 0;
-	ft_strdel(&sess->input_text);
-	sess->input_text = ft_strnew(BUFF_SIZE);
-	sess->input_ix = 0;
 }
 
 /*
@@ -100,7 +108,7 @@ int		get_command_str(t_sess *sess)
 			//if (enter_vim_mode(sess) != 0)
 				return (1);
 		}
-		else if (key == KEY_ENTER && valid_brackets(sess->input_text) == 1 && valid_quotes(sess->input_text) == 1)
+		else if (key == KEY_ENTER ) //&& valid_brackets(sess->input_text) == 1 && valid_quotes(sess->input_text) == 1)
 				break ;
 		else if (key != '\0' && render(sess, process_keypress(key, sess)) != 0)
 			return (1);
