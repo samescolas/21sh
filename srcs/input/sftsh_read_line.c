@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 17:24:59 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 17:53:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,30 @@
 #include "ft_keypress.h"
 #include "ft_termcap.h"
 
-void		resize_buffer(char **line, size_t len)
+void		resize_buffer(t_string *str)
 {
 	char	*tmp;
 
-	tmp = ft_strnew(len + BUFF_SIZE);
+	tmp = ft_strnew(str->len + BUFF_SIZE);
 	ft_strncpy(tmp, *line, len);
-	ft_strdel(line);
-	*line = tmp;
+	ft_strdel(&str->text);
+	str->text = tmp;
+}
+
+void		resize_input(t_sess *sess)
+{
+	char	**tmp;
+	int		i;
+
+	if (!(tmp = (t_string **)malloc(
+			(sess->num_lines + BUFF_LINES) * sizeof(t_string *))))
+		ft_fatal("err: out of memory\n");
+	i = -1;
+	while (++i < sess->num_lines)
+		tmp[i] = sess->input_text[i];
+	tmp[i] = create_str(ft_strnew(BUFF_SIZE));
+	free(sess->input_text);
+	sess->input_text = tmp;
 }
 
 void	reset_sess(t_sess *sess) 
@@ -74,10 +90,15 @@ static int	read_line(t_sess *sess)
 */
 static int process_keypress(int key, t_sess *sess)
 {
-	if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
-		resize_buffer(&sess->input_text, sess->input_len);
+	if (sess->input_text[sess->input_line]->len > 0 &&
+			sess->input_text[sess->input_line]->len % BUFF_SIZE == 0)
+		resize_buffer(sess->input_text[sess->input_line]);
+	//if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
+	//	resize_buffer(&sess->input_text, sess->input_len);
 	if (ft_isprint(key) && key != KEY_ENTER)
 		return (update_printable(key, sess));
+	return (0);
+	/*
 	else if (IS_ARROWKEY(key))
 		return (update_arrowkey(key, sess));
 	else if (key == KEY_HOME || key == KEY_END)
@@ -91,6 +112,7 @@ static int process_keypress(int key, t_sess *sess)
 	else
 		write(1, &key, 1);
 	return (0);
+	*/
 }
 
 int		get_command_str(t_sess *sess)
