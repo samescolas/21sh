@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 17:29:17 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/03 17:44:40 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int				render_del(t_sess *sess);
 
 
 //int				read_line(t_term *term);
-//void			resize_buffer(char **line, t_term *term);
+//void			resize_buffer(t_string *);
 //t_term			*create_term(void);
 
 #endif
