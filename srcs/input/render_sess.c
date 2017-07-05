@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 18:24:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 12:03:14 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static void	update_position2(t_sess *sess, int cm)
 	}
 }
 */
+
 static void move_left(t_sess *sess, int n)
 {
 	n *= -1;
@@ -107,7 +108,7 @@ static void	move_right(t_sess *sess, int n)
 {
 	while (n--)
 	{
-		if ((int)sess->cursor->x == sess->term_width - 1)
+		if ((int)sess->cursor->x == sess->term_width - 2)
 		{
 			sess->cursor->x = 0;
 			sess->cursor->y += 1;
@@ -146,9 +147,8 @@ static void	update_position(t_sess *sess, int cm)
 		move_right(sess, cm);
 	else
 		move_left(sess, cm);
-//	snapback(sess);
 }
-
+/*
 static void	clear_screen(int cm)
 {
 	int		ix;
@@ -184,7 +184,62 @@ static int	redraw(t_sess *sess, int cm)
 		clear_screen(cm * -1);
 	return (offset + sess->num_lines - 1);
 }
+*/
 
+int		get_y(t_sess *sess)
+{
+	int		ix;
+	int		ret;
+
+	ix = -1;
+	ret = 0;
+	while (++ix < sess->input_line)
+	{
+		if (!ix)
+			ret += (int)((sess->input_text[ix]->len + sess->prompt_str->len + 1) /
+				sess->term_width);
+		else
+			ret += (int)(sess->input_text[ix]->len / sess->term_width);
+	}
+	if (sess->input_line > 0)
+		ret += (int)((sess->input_text[ix]->len - sess->input_ix) / sess->term_width);
+	else
+		ret += (int)((sess->input_text[ix]->len - sess->input_ix +
+			sess->prompt_str->len + 1) / sess->term_width);
+	return (ret);
+}
+
+int		get_x(t_sess *sess)
+{
+	if (sess->input_line == 0)
+		return ((sess->input_ix + sess->prompt_str->len + 1) % sess->term_width);
+	return (sess->input_ix % sess->term_width);
+}
+
+int		render(t_sess *sess, int cm)
+{
+	t_string	*cmd;
+
+	if (sess->num_lines > 1)
+		cmd = join_strs(sess->input_text, sess->num_lines, '\n');
+	else cmd = create_str(ft_strdup(sess->input_text[0]->text));
+
+	ft_move_cursor(K_UP, sess->cursor->y);
+	ft_move_cursor(K_LEFT, sess->cursor->x);
+
+	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
+	ft_putstr(cmd->text);
+
+	ft_move_cursor(K_UP, get_y(sess));
+	write(1, "\r", 1);
+	ft_move_cursor(K_RIGHT, get_x(sess));
+
+	if (cm)
+		update_position(sess, cm);
+	return (0);
+}
+
+/*
 int		render(t_sess *sess, int cm)
 {
 	int		len;
@@ -200,6 +255,7 @@ int		render(t_sess *sess, int cm)
 	ft_move_cursor(K_RIGHT, sess->cursor->x);
 	return (0);
 }
+*/
 /*
 int		render_printable(t_sess *sess)
 {
