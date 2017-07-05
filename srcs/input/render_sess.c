@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 12:03:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 14:57:16 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,16 @@ static void move_left(t_sess *sess, int n)
 	{
 		if (sess->cursor->x == 0)
 		{
+			ft_move_cursor(K_DOWN, 1);
+			write(1, "\r", 1);
 			sess->cursor->y -= 1;
 			sess->cursor->x = sess->term_width - 1;
 		}
 		else
+		{
+			ft_move_cursor(K_LEFT, 1);
 			sess->cursor->x -= 1;
+		}
 	}
 }
 
@@ -108,13 +113,18 @@ static void	move_right(t_sess *sess, int n)
 {
 	while (n--)
 	{
-		if ((int)sess->cursor->x == sess->term_width - 2)
+		if ((int)sess->cursor->x == sess->term_width - 1)
 		{
+			ft_move_cursor(K_DOWN, 1);
+			write(1, "\r", 1);
 			sess->cursor->x = 0;
 			sess->cursor->y += 1;
 		}
 		else
+		{
+			ft_move_cursor(K_RIGHT, 1);
 			sess->cursor->x += 1;
+		}
 	}
 }
 /*
@@ -212,8 +222,8 @@ int		get_y(t_sess *sess)
 int		get_x(t_sess *sess)
 {
 	if (sess->input_line == 0)
-		return ((sess->input_ix + sess->prompt_str->len + 1) % sess->term_width);
-	return (sess->input_ix % sess->term_width);
+		return ((sess->input_ix + sess->prompt_str->len) % sess->term_width);
+	return ((sess->input_ix - 1) % sess->term_width);
 }
 
 int		render(t_sess *sess, int cm)
@@ -225,7 +235,7 @@ int		render(t_sess *sess, int cm)
 	else cmd = create_str(ft_strdup(sess->input_text[0]->text));
 
 	ft_move_cursor(K_UP, sess->cursor->y);
-	ft_move_cursor(K_LEFT, sess->cursor->x);
+	write(1, "\r", 1);
 
 	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
 	ft_putstr(cmd->text);
