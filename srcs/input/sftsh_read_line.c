@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/04 18:02:56 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 11:17:01 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@
 #include "sftsh_types.h"
 #include "ft_keypress.h"
 #include "ft_termcap.h"
-
-void		resize_buffer(t_string *str)
-{
-	char	*tmp;
-
-	tmp = ft_strnew(str->len + BUFF_SIZE);
-	ft_strncpy(tmp, str->text, str->len);
-	ft_strdel(&str->text);
-	str->text = tmp;
-}
 
 void		resize_input(t_sess *sess)
 {
@@ -63,36 +53,21 @@ void	reset_sess(t_sess *sess)
 	sess->cursor->y = 0;
 }
 
-/*
-static int	read_line(t_sess *sess)
+static int	update_newline(t_sess *sess)
 {
-	char			buf;
-
-	while (1742)
-	{
-		if (sess->cmd_len > BUFF_SIZE - 1 && sess->cmd_len % BUFF_SIZE == 0)
-			resize_buffer(&sess->prompt[0], sess);
-		if (read(STDIN_FILENO, &buf, 1) > 0 && buf != '\r')
-		{
-			if (!ft_keypress(buf, sess))
-				break ;
-		}
-		else if (buf == '\r')
-			break ;
-	}
-	write(1, "\n", 1);
-	return ((sess->cmd_len > 0 || *(sess->prompt[0]) != '\0') ? 1 : -1);
+	if (sess->num_lines % BUFF_LINES == 0)
+		resize_input(sess);
+	sess->input_text[++(sess->input_line)] = create_str(ft_strnew(BUFF_SIZE));
+	sess->input_ix = 0;
+	sess->num_lines += 1;
+	return (sess->term_width - sess->cursor->x);
 }
-*/
-
 
 /*
 ** Updates session based on pressed key.
 */
 static int process_keypress(int key, t_sess *sess)
 {
-	//if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
-	//	resize_buffer(&sess->input_text, sess->input_len);
 	if (ft_isprint(key) && key != KEY_ENTER)
 		return (update_printable(key, sess));
 	else if (IS_ARROWKEY(key))
@@ -103,10 +78,10 @@ static int process_keypress(int key, t_sess *sess)
 		return (update_bkspc(sess));
 	else if (key == KEY_DEL && sess->input_len > 0)
 		return (update_del(sess));
+	else if (key == KEY_ENTER)
+		return (update_newline(sess));
 	return (0);
 	/*
-	else if (key == KEY_ENTER)
-		return (update_printable('\n', sess));
 	else
 		write(1, &key, 1);
 	return (0);
@@ -128,7 +103,7 @@ int		get_command_str(t_sess *sess)
 			//if (enter_vim_mode(sess) != 0)
 				return (1);
 		}
-		else if (key == KEY_ENTER ) //&& valid_brackets(sess->input_text) == 1 && valid_quotes(sess->input_text) == 1)
+		else if (key == KEY_ENTER && valid_brackets(sess->input_text, sess->num_lines) == 1 && valid_quotes(sess->input_text, sess->num_lines) == 1)
 				break ;
 		else if (key != '\0' && render(sess, process_keypress(key, sess)) != 0)
 			return (1);
