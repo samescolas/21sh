@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 18:34:47 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/04 18:02:56 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,20 @@ static int	read_line(t_sess *sess)
 */
 static int process_keypress(int key, t_sess *sess)
 {
-	if (sess->input_text[sess->input_line]->len > 0 &&
-			sess->input_text[sess->input_line]->len % BUFF_SIZE == 0)
-		resize_buffer(sess->input_text[sess->input_line]);
 	//if (sess->input_len > 0 && sess->input_len % BUFF_SIZE == 0)
 	//	resize_buffer(&sess->input_text, sess->input_len);
 	if (ft_isprint(key) && key != KEY_ENTER)
 		return (update_printable(key, sess));
 	else if (IS_ARROWKEY(key))
 		return (update_arrowkey(key, sess));
-	return (0);
-	/*
-	else if (key == KEY_HOME || key == KEY_END)
-		return (update_home_end(key, sess));
+	//else if (key == KEY_HOME || key == KEY_END)
+	//	return (update_home_end(key, sess));
 	else if (key == KEY_BKSPC && sess->input_ix > 0)
 		return (update_bkspc(sess));
 	else if (key == KEY_DEL && sess->input_len > 0)
 		return (update_del(sess));
+	return (0);
+	/*
 	else if (key == KEY_ENTER)
 		return (update_printable('\n', sess));
 	else

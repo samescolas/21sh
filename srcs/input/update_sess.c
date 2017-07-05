@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/04 17:46:01 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/04 18:03:45 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,26 @@ int			update_printable(int key, t_sess *sess)
 	return (1);
 }
 
-/*
 int		update_bkspc(t_sess *sess)
 {
-	int		len;
-
-	if (sess->input_text[sess->input_len - 1] == '\n')
-		--(sess->input_lines);
-	if (sess->input_len == 0)
+	if (sess->input_ix == 0)
 		return (0);
-	if (sess->input_ix == (int)sess->input_len)
-		sess->input_text[sess->input_ix - 1] = '\0';
-	else
-	{
-		len = ft_strlen(&sess->input_text[sess->input_ix]);
-		ft_memmove(&sess->input_text[sess->input_ix], &sess->input_text[sess->input_ix + 1], len);
-		if (sess->input_text[sess->input_len - 1] == '\n')
-			--sess->input_lines;
-		sess->input_text[sess->input_len - 1] = '\0';
-	}
-	--(sess->input_len);
-	--(sess->input_ix);
+	remove_str(sess->input_text[sess->input_line], sess->input_ix - 1);
+	sess->input_ix -= 1;
+	sess->input_len -= 1;
 	return (-1);
 }
 
+int		update_del(t_sess *sess)
+{
+	if (sess->input_ix == sess->input_text[sess->input_line]->len)
+		return (0);
+	remove_str(sess->input_text[sess->input_line], sess->input_ix);
+	sess->input_len -= 1;
+	return (0);
+}
+
+/*
 int		update_del(t_sess *sess)
 {
 	int		len;
@@ -116,8 +112,8 @@ int		update_arrowkey(int key, t_sess *sess)
 				sess->input_ix = sess->input_text[sess->input_line]->len;
 			ret = sess->term_width;
 		}
-	else if (sess->input_text[sess->input_line]->len - sess->input_ix >
-			sess->term_width - (sess->input_ix % sess->term_width))
+	else if (sess->input_ix + (sess->term_width - (sess->input_ix % sess->term_width)) <
+			sess->input_text[sess->input_line]->len)
 		{
 			sess->input_ix += sess->term_width;
 			if (sess->input_ix > sess->input_text[sess->input_line]->len)
