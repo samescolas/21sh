@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 15:11:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 15:15:33 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,18 @@ int		get_x(t_sess *sess)
 	return ((sess->input_ix) % sess->term_width);
 }
 
+void	clear_screen(int cm)
+{
+	int		counter;
+
+	counter = -10;
+	while (++counter < cm)
+		ft_putchar(32);
+	counter = -10;
+	while (++counter < cm)
+		ft_putchar(8);
+}
+
 int		render(t_sess *sess, int cm)
 {
 	t_string	*cmd;
@@ -232,7 +244,10 @@ int		render(t_sess *sess, int cm)
 	ft_move_cursor(K_RIGHT, get_x(sess));
 
 	if (cm)
+	{
+		clear_screen(cm);
 		update_position(sess, cm);
+	}
 	return (0);
 }
 
