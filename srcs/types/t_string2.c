@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 10:55:29 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 11:12:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 15:40:45 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_string	*join_strs(t_string **arr, int len,  char glue)
 	while (++ix < len)
 	{
 		ft_strncat(ret->text, arr[ix]->text, arr[ix]->len);
-		ft_strncat(ret->text, &glue, 1);
+		if (ix + 1 < len)
+			ft_strncat(ret->text, &glue, 1);
 	}
 	return (ret);
 }

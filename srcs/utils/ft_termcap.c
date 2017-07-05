@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 08:44:02 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/01 08:51:49 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 16:13:39 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,15 @@ void	ft_putstr_mode(char *str, char *mode)
 		return ;
 	tputs(str, 1, ft_putc);
 	tputs((mode == US ? UE : ME), 1, ft_putc);
+}
+
+void	ft_hide_cursor(void)
+{
+	tputs(VI, 1, ft_putc);
+}
+
+void	ft_print_loc(char *str, int x, int y)
+{
+	tputs(tgoto(CM, x, y), 1, ft_putc);
+	write(str);
 }

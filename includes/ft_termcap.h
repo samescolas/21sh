@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 10:03:22 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/25 14:13:10 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 16:14:17 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ typedef struct s_sess	t_sess;
 int		ft_putc(int c);
 void	ft_putstr_mode(char *str, char *mode);
 void	ft_move_cursor(char *direction, int n);
+void	ft_putstr_loc(char *str, int x, int y);
 
 #endif

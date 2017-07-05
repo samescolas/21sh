@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 11:17:01 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 15:57:51 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	update_newline(t_sess *sess)
 	sess->input_text[++(sess->input_line)] = create_str(ft_strnew(BUFF_SIZE));
 	sess->input_ix = 0;
 	sess->num_lines += 1;
+	return (1);
 	return (sess->term_width - sess->cursor->x);
 }
 
