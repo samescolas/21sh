@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 18:30:48 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/04 18:18:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int				get_command_str(t_sess *sess);
 int				enter_vim_mode(t_sess *sess);
 t_sess			*create_sess(void);
 
-int				valid_quotes(char *str);
-int				valid_brackets(char *str);
+int				valid_quotes(t_string **str, int lines);
+int				valid_brackets(t_string **str, int lines);
 
 size_t			get_term_width(void);
 size_t			get_term_height(void);
