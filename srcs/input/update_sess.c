@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 10:40:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 10:54:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,19 @@ int			update_bkspc(t_sess *sess)
 			sess->num_lines -= 1;
 			free_str(&sess->input_text[(sess->input_line)--]);
 			sess->input_ix = sess->input_text[sess->input_line]->len;
-			ft_move_cursor(K_UP, 1);
-			write(1, "\r", 1);
-			ft_move_cursor(K_RIGHT,
+			sess->cursor->y -= 1;
+			sess->cursor->x = (
 				sess->input_text[sess->input_line]->len < sess->term_width - 1 ?
 				sess->input_text[sess->input_line]->len : sess->term_width - 1);
+			if (sess->cursor->y == 0)
+				sess->cursor->x += (sess->prompt_str->len + 1);
+			ft_move_cursor(K_UP, 1);
+			write(1, "\r", 1);
+			ft_move_cursor(K_RIGHT, sess->cursor->x);
 			return (0);
 		}
+		else
+			return (0);
 	}
 	bkspc[0] = 8;
 	bkspc[1] = 32;
