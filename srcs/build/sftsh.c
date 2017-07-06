@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/03 18:21:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:51:27 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ static void	disp_input(t_string **input, int lines)
 int			sftsh(char ***envp)
 {
 	//char	c;
-	static t_sess	*sess;
+	static t_sh		*shell;
 	//t_command		*command;
 
-	if (!sess)
-		sess = create_sess();
-	while (envp && get_command_str(sess) == 0)
+	if (!shell)
+		shell = create_sh();
+	while (envp && get_command_str(shell) == 0)
 	{
 		/*if (ft_strncmp(sess->prompt[0], "ps1=", 4) == 0)
 		{
@@ -91,7 +91,7 @@ int			sftsh(char ***envp)
 				break ;
 		}
 		*/
-		disp_input(sess->input_text, sess->num_lines);
+		disp_input(shell->input, shell->lines);
 	}
 	return (1);
 	//return (delete_prompt(sess->prompt));

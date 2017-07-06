@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 14:11:02 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:49:16 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,80 +18,98 @@
 #include "ft_keypress.h"
 #include "ft_termcap.h"
 
-void		resize_input(t_sess *sess)
+void		resize_input(t_sh *shell)
 {
 	t_string	**tmp;
 	int			i;
 
-	if (!(tmp = (t_string **)malloc(
-			(sess->num_lines + BUFF_LINES) * sizeof(t_string *))))
+	if(!(tmp = (t_string **)malloc((shell->lines + BUFF_LINES) * sizeof(t_string *))))
 		ft_fatal("err: out of memory\n");
 	i = -1;
-	while (++i < sess->num_lines)
-		tmp[i] = sess->input_text[i];
+	while (++i < (int)shell->lines)
+		tmp[i] = shell->input[i];
 	tmp[i] = create_str(ft_strnew(BUFF_SIZE));
-	free(sess->input_text);
-	sess->input_text = tmp;
+	free_strarr(&shell->input, shell->lines);
+	shell->input = tmp;
 }
 
-void	reset_sess(t_sess *sess) 
+void	reset_shell(t_sh *shell)
 {
-	int		i;
-
-	i = -1;
-	while (++i < sess->num_lines)
-		ft_strdel(&sess->input_text[i]->text);
-	free(sess->input_text);
-	if (!(sess->input_text = (t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
+	free_strarr(&shell->input, shell->lines);
+	if (!(shell->input = (t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
 		ft_fatal("err: out of memory\n");
-	sess->input_text[0] = create_str(ft_strnew(BUFF_SIZE));
-	sess->input_ix = 0;
-	sess->input_line = 0;
-	sess->num_lines = 1;
-	sess->input_len = 0;
-	sess->cursor->x = sess->prompt_str->len + 1;
-	sess->cursor->y = 0;
-}
-
-static int	update_newline(t_sess *sess)
-{
-	if (sess->num_lines > 0 && sess->num_lines % BUFF_LINES == 0)
-		resize_input(sess);
-	sess->input_text[++(sess->input_line)] = create_str(ft_strnew(BUFF_SIZE));
-	sess->input_ix = 0;
-	sess->num_lines += 1;
-	ft_move_cursor(K_DOWN, 1);
-	write(1, "\r", 1);
-	sess->cursor->x = 0;
-	sess->cursor->y += 1;
-	return (0);
+	shell->input[0] = create_str(ft_strnew(BUFF_SIZE));
+	delete_coord(&shell->strt);
+	shell->strt = get_cursor_position();
+	delete_coord(&shell->curr);
+	shell->curr = create_coord(
+			shell->strt->x + shell->prompt[0]->len, shell->strt->y);
+	shell->ix->x = 0;
+	shell->ix->y = 0;
+	shell->lines = 1;
 }
 
 /*
 ** Updates session based on pressed key.
 */
-static int process_keypress(int key, t_sess *sess)
+static int process_keypress(int key, t_sh *shell)
 {
 	if (ft_isprint(key) && key != KEY_ENTER)
-		return (update_printable(key, sess));
-	else if (IS_ARROWKEY(key))
-		return (update_arrowkey(key, sess));
-	//else if (key == KEY_HOME || key == KEY_END)
-	//	return (update_home_end(key, sess));
-	else if (key == KEY_BKSPC)
-		return (update_bkspc(sess));
-	else if (key == KEY_DEL && sess->input_len > 0)
-		return (update_del(sess));
-	else if (key == KEY_ENTER)
-		return (update_newline(sess));
+		return (update_printable(key, shell));
 	return (0);
 	/*
+	else if (IS_ARROWKEY(key))
+		return (update_arrowkey(key, shell));
+	//else if (key == KEY_HOME || key == KEY_END)
+	//	return (update_home_end(key, shell));
+	else if (key == KEY_BKSPC)
+		return (update_bkspc(shell));
+	else if (key == KEY_DEL && shell->input_len > 0)
+		return (update_del(shell));
+	else if (key == KEY_ENTER)
+		return (update_newline(shell));
 	else
 		write(1, &key, 1);
 	return (0);
 	*/
 }
 
+int		get_command_str(t_sh *shell)
+{
+	int		key;
+	t_coord	*tmp;
+
+	reset_shell(shell);
+	ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
+	while ((key = get_keypress()) != '~')
+	{
+		if (!key)
+			continue ;
+		if (key == 'P')
+		{
+			tmp = get_cursor_position();
+			ft_putstr("\n(");
+			ft_putnbr(tmp->x);
+			ft_putstr(", ");
+			ft_putnbr(tmp->y);
+			ft_putstr(")\n");
+			exit(0);
+		}
+		if (key == KEY_ESCAPE)
+			return (1); // vim mode
+		else if (key == KEY_ENTER)
+		{
+			if (valid_brackets(shell->input, shell->lines) == 1 && valid_quotes(shell->input, shell->lines) == 1)
+				break ;
+		}
+		else if (key != '\0')
+			if (process_keypress(key, shell) == 42)
+				return (1);
+	}
+	return (0);
+}
+
+/*
 int		get_command_str(t_sess *sess)
 {
 	int 	key;
@@ -132,18 +150,15 @@ int		get_command_str(t_sess *sess)
 		else if (key != '\0')
 			if (process_keypress(key, sess) == 142)
 				return (1);
-		/*
 		else if (process_keypress(key, sess) == 0)
 		{
 			if (render_keypress(key, sess) != 0)
 				return (1);
 		}
-		*/
 		//if (ft_keypress(key, sess) != 0)
 		//	return (0);
 	}
 	return (0);
-	/*
 	int				line_read;
 
 	ft_strdel(&(sess->prompt[0]));
@@ -158,5 +173,5 @@ int		get_command_str(t_sess *sess)
 		line_read = read_line(reset_sess(sess));
 	}
 	return (1);
-	*/
 }
+*/

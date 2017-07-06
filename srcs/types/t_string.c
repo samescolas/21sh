@@ -6,11 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 17:19:20 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/04 12:19:05 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:05:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sftsh_types.h"
+#include "sftsh_read_line.h"
 #include "../../libft/libft.h"
 
 t_string	*create_str(char *str)

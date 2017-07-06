@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 17:23:35 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:02:33 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+typedef struct s_sh	t_sh;
 typedef struct s_coord	t_coord;
 typedef struct s_string	t_string;
 
@@ -31,7 +32,24 @@ static const int KEY_HOME = 1723;
 static const int KEY_END = 1724;
 static const int KEY_DEL = 1725;
 
-#define IS_ARROWKEY(key) (key >= KEY_UP && key <= KEY_RIGHT)
+# define BUFF_SIZE 64
+# define BUFF_LINES 16
+# define DEFAULT_PROMPT "sftsh $"
+# define DEFAULT_COLOR "\x1B[94m"
+
+# define IS_ARROWKEY(key) (key >= KEY_UP && key <= KEY_RIGHT)
+
+/*
+typedef struct 	s_sh
+{
+	t_string	**input;
+	t_string	prompt[2];
+	t_string	*cb;
+	t_coord		*loc;
+	t_coord		*ix;
+	t_coord		*term;
+	size_t		lines;
+}				t_sh;
 
 typedef struct	s_sess
 {
@@ -47,42 +65,18 @@ typedef struct	s_sess
 	t_string	*prompt_color;
 	t_coord		*cursor;
 }				t_sess;
+*/
 
 int				get_keypress(void);
-int				get_command_str(t_sess *sess);
-int				enter_vim_mode(t_sess *sess);
-t_sess			*create_sess(void);
+int				get_command_str(t_sh *shell);
+t_sh			*create_shell(void);
 
 int				valid_quotes(t_string **str, int lines);
 int				valid_brackets(t_string **str, int lines);
 
-void			move_left(t_sess *sess);
-void			move_right(t_sess *sess);
-
 size_t			get_term_width(void);
 size_t			get_term_height(void);
 
-int				update_arrowkey(int key, t_sess *sess);
-int				update_printable(int key, t_sess *sess);
-int				update_home_end(int key, t_sess *sess);
-int				update_bkspc(t_sess *sess);
-int				update_del(t_sess *sess);
-
-int				is_vimarrow(int key);
-int				update_vimarrow(int key, t_sess *sess);
-int				update_vimword(int key, t_sess *sess);
-int				render_vimarrow(int key);
-int				render_vimword(t_sess *sess);
-
-int				render_arrowkey(int key);
-int				render(t_sess *sess, int cm);
-int				render_home_end(int key, t_sess *sess);
-int				render_bkspc(void);
-int				render_del(t_sess *sess);
-
-
-//int				read_line(t_term *term);
-//void			resize_buffer(t_string *);
-//t_term			*create_term(void);
+int				update_printable(int key, t_sh *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 10:54:00 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:52:47 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,36 @@
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
 #include "ft_termcap.h"
+#include "sftsh_utils.h"
 
 /*
 ** Function to write a printable character to the terminal,
 ** update session info, and move the cursor appropriately.
 */
 
-int			update_printable(int key, t_sess *sess)
+int			update_printable(int key, t_sh *shell)
+{
+	insert_str(shell->input[shell->ix->y], (char)key, shell->ix->x);
+	write(1, &key, 1);
+	shell->curr->x += 1;
+	if (shell->curr->x == shell->term->x - 1)
+	{
+		shell->curr->x = 0;
+		shell->curr->y += 1;
+		write(1, "\r\n", 2);
+	}
+	return (0);
+}
+
+/*
+int			update_printable(int key, t_sh *shell)
 {
 	char	crlf[2];
 
 	crlf[0] = 10;
 	crlf[1] = 13;
-	insert_str(sess->input_text[sess->input_line], (char)key, sess->input_ix);
+	insert_str(shell->input[shell->ix->y], (char)key, shell->ix->x);
+	shell->ix->x += 1;
 	sess->input_len += 1;
 	sess->input_ix += 1;
 	write(1, &key, 1);
@@ -35,11 +52,12 @@ int			update_printable(int key, t_sess *sess)
 	move_right(sess);
 	return (1);
 }
+*/
 
 /*
 ** Same as printable except for backspace.
 */
-
+/*
 int			update_bkspc(t_sess *sess)
 {
 	char	bkspc[3];
@@ -97,7 +115,7 @@ int			update_del(t_sess *sess)
 	ft_move_cursor(K_LEFT, len + 1);
 	return (0);
 }
-
+*/
 /*
 int		update_del(t_sess *sess)
 {
@@ -114,7 +132,7 @@ int		update_del(t_sess *sess)
 	return (0);
 }
 */
-
+/*
 int			update_arrowkey(int key, t_sess *sess)
 {
 	int	ret;
@@ -199,7 +217,7 @@ int			update_arrowkey(int key, t_sess *sess)
 	}
 	return  (ret);
 }
-
+*/
 /*
 int		update_arrowkey(int key, t_sess *sess)
 {

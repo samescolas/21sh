@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 12:18:29 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/04 11:29:27 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:02:43 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 # include <signal.h>
 
 # define MAX_PATHLEN 512
-# define BUFF_LINES 7
 
-# define DEFAULT_PROMPT "sftsh $"
-# define DEFAULT_COLOR "\x1B[94m"
 # define DEFAULT_TERM "xterm-256color"
 # define DEFAULT_PATH "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 

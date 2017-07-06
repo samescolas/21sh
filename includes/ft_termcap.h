@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 10:03:22 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 16:14:17 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 15:47:03 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@
 
 typedef struct s_coord	t_coord;
 typedef struct s_term	t_term;
-typedef struct s_sess	t_sess;
+typedef struct s_string	t_string;
+typedef struct s_sh		t_sh;
 
 int		ft_putc(int c);
 void	ft_putstr_mode(char *str, char *mode);
 void	ft_move_cursor(char *direction, int n);
-void	ft_putstr_loc(char *str, int x, int y);
+void	ft_write_loc(t_string *str, t_coord pos);
 
 #endif

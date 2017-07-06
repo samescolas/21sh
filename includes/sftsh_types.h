@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 11:10:23 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:41:18 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-
-# define BUFF_SIZE 64
 
 typedef struct			s_string
 {
@@ -40,6 +38,18 @@ typedef struct			s_coord
 	size_t				y;
 }						t_coord;
 
+typedef struct			s_sh
+{
+	t_string			**input;
+	t_string			*prompt[2];
+	t_string			*cb;
+	t_coord				*strt;
+	t_coord				*curr;
+	t_coord				*ix;
+	t_coord				*term;
+	size_t				lines;
+}						t_sh;
+
 t_string				*create_str(char *str);
 t_string				*append_str(t_string *str, char c);
 t_string				*insert_str(t_string *str, char c, int ix);
@@ -54,5 +64,8 @@ t_command				*pop_command(t_command **stack);
 void					free_command(t_command *command);
 
 t_coord					*create_coord(size_t z, size_t y);
+void					delete_coord(t_coord **coord);
+
+t_sh					*create_sh(void);
 
 #endif

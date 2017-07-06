@@ -6,11 +6,12 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 08:44:02 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 17:18:18 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:06:19 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_termcap.h"
+#include "sftsh_types.h"
 
 int		ft_putc(int c)
 {
@@ -44,3 +45,8 @@ void	ft_hide_cursor(void)
 	tputs(VI, 1, ft_putc);
 }
 
+void	ft_write_loc(t_string *str, t_coord pos)
+{
+	tputs(tgoto(CM, pos.x, pos.y), 1, ft_putc);
+	write(1, str->text, str->len);
+}

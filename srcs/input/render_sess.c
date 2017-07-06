@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 18:29:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 15:47:24 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
 
+/*
 void	move_right(t_sess *sess)
 {
 	if ((int)sess->cursor->x == sess->term_width - 1)
@@ -36,6 +37,7 @@ void	move_left(t_sess *sess)
 	else
 		sess->cursor->x -= 1;
 }
+*/
 /*
 void	move_up(t_sess *sess)
 {

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 15:22:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 14:08:48 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 16:42:12 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,19 @@ t_coord			*get_cursor_position(void)
 
 	if (write(STDOUT_FILENO, "\x1b[6n", 4) != 4)
 		ft_fatal("err: unable to determine cursor location\n");
-	i = 0;
-	while (i < sizeof(buf) - 1)
+	i = -1;
+	while (++i < sizeof(buf) - 1)
 	{
-		if (read(STDIN_FILENO, &buf[i], 1) != 1)
+		if (read(STDOUT_FILENO, &buf[i], 1) != 1)
 			break ;
 		if (buf[i] == 'R')
 			break ;
-		i += 1;
 	}
 	buf[i] = '\0';
 
 	if (buf[0] != '\x1b' || buf[1] != '[')
-		ft_fatal("err: unable to determine cursor location\n");
+		return (get_cursor_position());
 	tmp = ft_strsplit(&buf[2], ';');
-	ret = create_coord(ft_atoi(tmp[0]), ft_atoi(tmp[1]));
+	ret = create_coord(ft_atoi(tmp[1]) - 1, ft_atoi(tmp[0]) - 1);
 	return (ret);
 }
