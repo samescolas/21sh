@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 10:53:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 14:11:02 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ static int process_keypress(int key, t_sess *sess)
 
 int		get_command_str(t_sess *sess)
 {
-	int key;
+	int 	key;
+	t_coord	*cursor;
 
 	reset_sess(sess);
 	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
@@ -113,6 +114,12 @@ int		get_command_str(t_sess *sess)
 			ft_putnbr(sess->input_line);
 			ft_putstr("\ninput_ix: ");
 			ft_putnbr(sess->input_ix);
+			cursor = get_cursor_position();
+			ft_putstr("\ncursor: (");
+			ft_putnbr(cursor->x);
+			ft_putstr(", ");
+			ft_putnbr(cursor->y);
+			ft_putstr(")\n");
 			exit(1);
 		}
 		if (key == KEY_ESCAPE)
