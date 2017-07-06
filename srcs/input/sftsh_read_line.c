@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 10:40:35 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 10:53:12 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int	update_newline(t_sess *sess)
 	sess->num_lines += 1;
 	ft_move_cursor(K_DOWN, 1);
 	write(1, "\r", 1);
+	sess->cursor->x = 0;
+	sess->cursor->y += 1;
 	return (0);
 }
 
