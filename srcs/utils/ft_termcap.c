@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 08:44:02 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 16:13:39 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 17:18:18 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,3 @@ void	ft_hide_cursor(void)
 	tputs(VI, 1, ft_putc);
 }
 
-void	ft_print_loc(char *str, int x, int y)
-{
-	tputs(tgoto(CM, x, y), 1, ft_putc);
-	write(str);
-}
