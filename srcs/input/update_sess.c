@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 15:57:46 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 18:38:09 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,40 @@
 
 int			update_printable(int key, t_sess *sess)
 {
+	char	crlf[2];
+
+	crlf[0] = 10;
+	crlf[1] = 13;
 	insert_str(sess->input_text[sess->input_line], (char)key, sess->input_ix);
 	sess->input_len += 1;
 	sess->input_ix += 1;
+	write(1, &key, 1);
+	if ((int)sess->cursor->x == sess->term_width - 1)
+		write(1, &crlf, 2);
+	move_right(sess);
 	return (1);
 }
 
 int		update_bkspc(t_sess *sess)
 {
+	char	bkspc[3];
+
 	if (sess->input_ix == 0)
 		return (0);
-	remove_str(sess->input_text[sess->input_line], sess->input_ix - 1);
+	bkspc[0] = 8;
+	bkspc[1] = 32;
+	bkspc[2] = 8;
+	if (sess->cursor->x == 0)
+	{
+		ft_move_cursor(K_UP, 1);
+		ft_move_cursor(K_RIGHT, sess->term_width - 1);
+		write(1, &bkspc[1], 1);
+	}
+	else
+		write(1, &bkspc, 3);
+	move_left(sess);
 	sess->input_ix -= 1;
+	remove_str(sess->input_text[sess->input_line], sess->input_ix);
 	sess->input_len -= 1;
 	return (-1);
 }
