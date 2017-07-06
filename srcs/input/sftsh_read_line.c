@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 15:57:51 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 10:40:35 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ void	reset_sess(t_sess *sess)
 
 static int	update_newline(t_sess *sess)
 {
-	if (sess->num_lines % BUFF_LINES == 0)
+	if (sess->num_lines > 0 && sess->num_lines % BUFF_LINES == 0)
 		resize_input(sess);
 	sess->input_text[++(sess->input_line)] = create_str(ft_strnew(BUFF_SIZE));
 	sess->input_ix = 0;
 	sess->num_lines += 1;
-	return (1);
-	return (sess->term_width - sess->cursor->x);
+	ft_move_cursor(K_DOWN, 1);
+	write(1, "\r", 1);
+	return (0);
 }
 
 /*
@@ -75,7 +76,7 @@ static int process_keypress(int key, t_sess *sess)
 		return (update_arrowkey(key, sess));
 	//else if (key == KEY_HOME || key == KEY_END)
 	//	return (update_home_end(key, sess));
-	else if (key == KEY_BKSPC && sess->input_ix > 0)
+	else if (key == KEY_BKSPC)
 		return (update_bkspc(sess));
 	else if (key == KEY_DEL && sess->input_len > 0)
 		return (update_del(sess));
@@ -96,9 +97,22 @@ int		get_command_str(t_sess *sess)
 	reset_sess(sess);
 	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
 	while ((key = get_keypress()) != '~')
-	{
-		if (!key)
+	{ if (!key)
 			continue ;
+		if (key == 'P') // Don't forget to remove this. //
+		{
+			ft_putstr("\n\n(");
+			ft_putnbr(sess->cursor->x);
+			ft_putstr(", ");
+			ft_putnbr(sess->cursor->y);
+			ft_putstr(")\nnum lines: ");
+			ft_putnbr(sess->num_lines);
+			ft_putstr("\tcurrent line: ");
+			ft_putnbr(sess->input_line);
+			ft_putstr("\ninput_ix: ");
+			ft_putnbr(sess->input_ix);
+			exit(1);
+		}
 		if (key == KEY_ESCAPE)
 		{
 			//if (enter_vim_mode(sess) != 0)
@@ -106,8 +120,9 @@ int		get_command_str(t_sess *sess)
 		}
 		else if (key == KEY_ENTER && valid_brackets(sess->input_text, sess->num_lines) == 1 && valid_quotes(sess->input_text, sess->num_lines) == 1)
 				break ;
-		else if (key != '\0' && render(sess, process_keypress(key, sess)) != 0)
-			return (1);
+		else if (key != '\0')
+			if (process_keypress(key, sess) == 142)
+				return (1);
 		/*
 		else if (process_keypress(key, sess) == 0)
 		{

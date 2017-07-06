@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 18:38:09 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 10:40:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
 #include "ft_termcap.h"
+
+/*
+** Function to write a printable character to the terminal,
+** update session info, and move the cursor appropriately.
+*/
 
 int			update_printable(int key, t_sess *sess)
 {
@@ -31,12 +36,29 @@ int			update_printable(int key, t_sess *sess)
 	return (1);
 }
 
-int		update_bkspc(t_sess *sess)
+/*
+** Same as printable except for backspace.
+*/
+
+int			update_bkspc(t_sess *sess)
 {
 	char	bkspc[3];
 
 	if (sess->input_ix == 0)
-		return (0);
+	{
+		if (sess->input_line > 0)
+		{
+			sess->num_lines -= 1;
+			free_str(&sess->input_text[(sess->input_line)--]);
+			sess->input_ix = sess->input_text[sess->input_line]->len;
+			ft_move_cursor(K_UP, 1);
+			write(1, "\r", 1);
+			ft_move_cursor(K_RIGHT,
+				sess->input_text[sess->input_line]->len < sess->term_width - 1 ?
+				sess->input_text[sess->input_line]->len : sess->term_width - 1);
+			return (0);
+		}
+	}
 	bkspc[0] = 8;
 	bkspc[1] = 32;
 	bkspc[2] = 8;
@@ -55,12 +77,18 @@ int		update_bkspc(t_sess *sess)
 	return (-1);
 }
 
-int		update_del(t_sess *sess)
+int			update_del(t_sess *sess)
 {
+	int		len;
+
 	if (sess->input_ix == sess->input_text[sess->input_line]->len)
 		return (0);
 	remove_str(sess->input_text[sess->input_line], sess->input_ix);
 	sess->input_len -= 1;
+	len = ft_strlen(&sess->input_text[sess->input_line]->text[sess->input_ix]);
+	write(1, &sess->input_text[sess->input_line]->text[sess->input_ix], len);
+	write(1, " ", 1);
+	ft_move_cursor(K_LEFT, len + 1);
 	return (0);
 }
 
@@ -81,7 +109,7 @@ int		update_del(t_sess *sess)
 }
 */
 
-int		update_arrowkey(int key, t_sess *sess)
+int			update_arrowkey(int key, t_sess *sess)
 {
 	int	ret;
 
@@ -93,6 +121,14 @@ int		update_arrowkey(int key, t_sess *sess)
 		else
 			sess->input_ix -= 1;
 		ret = -1;
+		if (sess->cursor->x == 0)
+		{
+			ft_move_cursor(K_UP, 1);
+			ft_move_cursor(K_RIGHT, sess->term_width - 1);
+		}
+		else
+			ft_move_cursor(K_LEFT, 1);
+		move_left(sess);
 	}
 	else if (key == KEY_RIGHT && (sess->input_line + 1 < sess->num_lines ||
 			sess->input_ix < sess->input_text[sess->input_line]->len))
@@ -104,6 +140,14 @@ int		update_arrowkey(int key, t_sess *sess)
 		}
 		else
 			sess->input_ix += 1;
+		if ((int)sess->cursor->x == sess->term_width - 1)
+		{
+			ft_move_cursor(K_DOWN, 1);
+			write(1, "\r", 1);
+		}
+		else
+			ft_move_cursor(K_RIGHT, 1);
+		move_right(sess);
 		ret = 1;
 	}
 	else if (key == KEY_UP)
