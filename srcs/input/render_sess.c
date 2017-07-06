@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:51:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/05 16:15:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/05 18:29:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,46 @@
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
 
+void	move_right(t_sess *sess)
+{
+	if ((int)sess->cursor->x == sess->term_width - 1)
+	{
+		sess->cursor->x = 0;
+		sess->cursor->y += 1;
+	}
+	else
+		sess->cursor->x += 1;
+}
+
+void	move_left(t_sess *sess)
+{
+	if (sess->cursor->x == 0)
+	{
+		sess->cursor->y -= 1;
+		sess->cursor->x = sess->term_width - 1;
+	}
+	else
+		sess->cursor->x -= 1;
+}
+/*
+void	move_up(t_sess *sess)
+{
+	sess->input_line -= 1;
+	sess->input_ix = MAX(sess->input_ix,
+				sess->input_text[sess->input_line]->len % sess->term_width);
+	sess->cursor->y -= 1;
+	sess->cursor->x = sess->input_ix;
+	if (sess->input_line == 0 &&
+			sess->input_ix + sess->prompt_str->len + 1 < sess->term_width)
+	{
+		sess->cursor->x += sess->prompt_str->len + 1;
+	}
+	ft_move_cursor(K_UP, 1);
+	write(1, "\r", 1);
+	ft_move_cursor(K_RIGHT, sess->cursor->x);
+}
+*/
+/*
 static void	clear_screen(int cm)
 {
 	int		counter;
@@ -31,27 +71,9 @@ static void update_disp(t_sess *sess, int cm)
 {
 	if (cm > 0)
 	{
-		if ((int)sess->cursor->x == sess->term_width - 1)
-		{
-			ft_move_cursor(K_DOWN, 1);
-			write(1, "\r", 1);
-			sess->cursor->x = 0;
-			sess->cursor->y += 1;
-		}
-		else
-			sess->cursor->x += 1;
 	}
 	else if (cm < 0)
 	{
-		if (sess->cursor->x == 0)
-		{
-			ft_move_cursor(K_DOWN, 1);
-			write(1, "\r", 1);
-			sess->cursor->y -= 1;
-			sess->cursor->x = sess->term_width - 1;
-		}
-		else
-			sess->cursor->x -= 1;
 	}
 
 }
@@ -110,3 +132,4 @@ int		render(t_sess *sess, int cm)
 	update_disp(sess, cm);
 	return (0);
 }
+*/
