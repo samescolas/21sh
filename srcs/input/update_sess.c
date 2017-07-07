@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 17:14:56 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 17:27:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 int			update_printable(int key, t_sh *shell)
 {
-	insert_str(shell->input[shell->ix->y], (char)key, shell->ix->x);
+	insert_str(shell->input[shell->ix->y], (char)key, (shell->ix->x)++);
 	write(1, &key, 1);
 	shell->curr->x += 1;
 	if (shell->curr->x == shell->term->x - 1)
@@ -59,10 +59,9 @@ int			update_bkspc(t_sh *shell)
 		{
 			ft_move_cursor(K_UP, 1);
 			write(1, "\r", 1);
-			ft_move_cursor(K_RIGHT, shell->term->x);
+			ft_move_cursor(K_RIGHT, shell->term->x - 1);
 			write(1, " ", 1);
-			write(1, &bkspc, 1);
-			shell->curr->x = shell->term->x;
+			shell->curr->x = shell->term->x - 1;
 			shell->curr->y -= 1;
 		}
 		else
