@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 16:02:33 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/06 17:14:35 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,6 @@ static const int KEY_DEL = 1725;
 
 # define IS_ARROWKEY(key) (key >= KEY_UP && key <= KEY_RIGHT)
 
-/*
-typedef struct 	s_sh
-{
-	t_string	**input;
-	t_string	prompt[2];
-	t_string	*cb;
-	t_coord		*loc;
-	t_coord		*ix;
-	t_coord		*term;
-	size_t		lines;
-}				t_sh;
-
-typedef struct	s_sess
-{
-	t_string	**input_text;
-	int			input_ix;
-	int			input_line;
-	int			num_lines;
-	int			input_len;
-	int			term_width;
-	int			term_height;
-	t_string	*clipboard;
-	t_string	*prompt_str;
-	t_string	*prompt_color;
-	t_coord		*cursor;
-}				t_sess;
-*/
-
 int				get_keypress(void);
 int				get_command_str(t_sh *shell);
 t_sh			*create_shell(void);
@@ -78,5 +50,6 @@ size_t			get_term_width(void);
 size_t			get_term_height(void);
 
 int				update_printable(int key, t_sh *shell);
+int				update_bkspc(t_sh *shell);
 
 #endif
