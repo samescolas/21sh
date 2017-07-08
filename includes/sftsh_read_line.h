@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 16:23:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 16:51:48 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,5 @@ size_t			get_term_height(void);
 int				update_printable(int key, t_sh *shell);
 int				update_bkspc(t_sh *shell);
 int				update_arrowkey(int key, t_sh *shell);
-
-void			move_cursor_left(t_sh *shell);
-void			move_ix_left(t_sh *shell);
-void			move_left(t_sh *shell);
 
 #endif
