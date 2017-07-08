@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 16:29:05 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 16:51:03 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sftsh_types.h"
 #include "../../libft/libft.h"
 #include "ft_termcap.h"
+#include "movement.h"
 #include "sftsh_utils.h"
 
 /*
@@ -52,8 +53,10 @@ int			update_bkspc(t_sh *shell)
 			write(1, " \r\n", 3);
 		}
 		else
+		{
 			ft_move_cursor(K_LEFT, 1);
-		write(1, " ", 1);
+			write(1, " ", 1);
+		}
 	}
 	else
 		/* remove line from shell->input */
