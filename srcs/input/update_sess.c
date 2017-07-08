@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 15:17:06 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 16:29:05 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,29 @@ int			update_printable(int key, t_sh *shell)
 ** Same as printable except for backspace.
 */
 
-
+int			update_bkspc(t_sh *shell)
+{
+	if (shell->input[shell->ix->y]->len > 0)
+	{
+		remove_str(shell->input[shell->ix->y], shell->ix->x - 1);
+		if (shell->curr->x == 0)
+		{
+			ft_move_cursor(K_UP, 1);
+			write(1, "\r", 1);
+			ft_move_cursor(K_RIGHT, shell->term->x - 1);
+			write(1, " \r\n", 3);
+		}
+		else
+			ft_move_cursor(K_LEFT, 1);
+		write(1, " ", 1);
+	}
+	else
+		/* remove line from shell->input */
+		return (1);
+	move_left(shell);
+	return (0);
+}
+/*
 int			update_bkspc(t_sh *shell)
 {
 	char	bkspc;
@@ -74,17 +96,16 @@ int			update_bkspc(t_sh *shell)
 	}
 	return (0);
 }
-/*
+*/
+
 int			update_arrowkey(int key, t_sh *shell)
 {
 	if (key == KEY_UP || key == KEY_DOWN)
 		return (0);
-	else if (key == KEY_LEFT && shell->ix->x > 0)
-	{
-
-	}
+	else if (key == KEY_LEFT)
+		move_left(shell);
+	return (0);
 }
-*/
 /*
 int			update_bkspc(t_sess *sess)
 {
