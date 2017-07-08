@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 17:13:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 15:15:33 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,70 +108,3 @@ int		get_command_str(t_sh *shell)
 	}
 	return (0);
 }
-
-/*
-int		get_command_str(t_sess *sess)
-{
-	int 	key;
-	t_coord	*cursor;
-
-	reset_sess(sess);
-	ft_padstr(sess->prompt_str->text, 1, sess->prompt_color->text);
-	while ((key = get_keypress()) != '~')
-	{ if (!key)
-			continue ;
-		if (key == 'P') // Don't forget to remove this. //
-		{
-			ft_putstr("\n\n(");
-			ft_putnbr(sess->cursor->x);
-			ft_putstr(", ");
-			ft_putnbr(sess->cursor->y);
-			ft_putstr(")\nnum lines: ");
-			ft_putnbr(sess->num_lines);
-			ft_putstr("\tcurrent line: ");
-			ft_putnbr(sess->input_line);
-			ft_putstr("\ninput_ix: ");
-			ft_putnbr(sess->input_ix);
-			cursor = get_cursor_position();
-			ft_putstr("\ncursor: (");
-			ft_putnbr(cursor->x);
-			ft_putstr(", ");
-			ft_putnbr(cursor->y);
-			ft_putstr(")\n");
-			exit(1);
-		}
-		if (key == KEY_ESCAPE)
-		{
-			//if (enter_vim_mode(sess) != 0)
-				return (1);
-		}
-		else if (key == KEY_ENTER && valid_brackets(sess->input_text, sess->num_lines) == 1 && valid_quotes(sess->input_text, sess->num_lines) == 1)
-				break ;
-		else if (key != '\0')
-			if (process_keypress(key, sess) == 142)
-				return (1);
-		else if (process_keypress(key, sess) == 0)
-		{
-			if (render_keypress(key, sess) != 0)
-				return (1);
-		}
-		//if (ft_keypress(key, sess) != 0)
-		//	return (0);
-	}
-	return (0);
-	int				line_read;
-
-	ft_strdel(&(sess->prompt[0]));
-	ft_padstr((sess->prompt[1] ? sess->prompt[1] : DEFAULT_PROMPT)\
-			, 1, (sess->prompt[2] ? sess->prompt[2] : DEFAULT_COLOR));
-	line_read = read_line(reset_sess(sess));
-	while (line_read <= 0)
-	{
-		ft_strdel(&(sess->prompt[0]));
-		ft_padstr((sess->prompt[1] ? sess->prompt[1] : DEFAULT_PROMPT)\
-			, 1, (sess->prompt[2] ? sess->prompt[2] : DEFAULT_COLOR));
-		line_read = read_line(reset_sess(sess));
-	}
-	return (1);
-}
-*/

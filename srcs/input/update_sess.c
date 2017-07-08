@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 17:27:36 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 15:17:06 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,17 @@ int			update_bkspc(t_sh *shell)
 	}
 	return (0);
 }
+/*
+int			update_arrowkey(int key, t_sh *shell)
+{
+	if (key == KEY_UP || key == KEY_DOWN)
+		return (0);
+	else if (key == KEY_LEFT && shell->ix->x > 0)
+	{
 
-
+	}
+}
+*/
 /*
 int			update_bkspc(t_sess *sess)
 {
