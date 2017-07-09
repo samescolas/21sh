@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:36:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 16:56:53 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/09 12:30:05 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ void	move_cursor_left(t_sh *shell)
 
 void	move_left(t_sh *shell)
 {
-	move_ix_left(shell);
 	move_cursor_left(shell);
+	move_ix_left(shell);
 }
