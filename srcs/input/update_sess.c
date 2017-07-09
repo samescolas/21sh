@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 16:59:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/09 12:51:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			update_printable(int key, t_sh *shell)
 	insert_str(shell->input[shell->ix->y], (char)key, (shell->ix->x)++);
 	write(1, &key, 1);
 	shell->curr->x += 1;
-	if (shell->curr->x == shell->term->x - 1)
+	if (shell->curr->x == shell->term->x)
 	{
 		shell->curr->x = 0;
 		shell->curr->y += 1;
@@ -62,42 +62,6 @@ int			update_bkspc(t_sh *shell)
 	move_left(shell);
 	return (0);
 }
-/*
-int			update_bkspc(t_sh *shell)
-{
-	char	bkspc;
-
-	bkspc = 8;
-
-	if (shell->ix->x == 0)
-	{
-		if (shell->ix->y == 0)
-			return (0);
-		// delete line from input
-	}
-	else
-	{
-		remove_str(shell->input[shell->ix->y], --(shell->ix->x));
-		if (shell->curr->x == 0)
-		{
-			ft_move_cursor(K_UP, 1);
-			write(1, "\r", 1);
-			ft_move_cursor(K_RIGHT, shell->term->x - 1);
-			write(1, " ", 1);
-			shell->curr->x = shell->term->x - 1;
-			shell->curr->y -= 1;
-		}
-		else
-		{
-			shell->curr->x -= 1;
-			write(1, &bkspc, 1);
-			write(1, " ", 1);
-			write(1, &bkspc, 1);
-		}
-	}
-	return (0);
-}
-*/
 
 int			update_arrowkey(int key, t_sh *shell)
 {
@@ -105,6 +69,8 @@ int			update_arrowkey(int key, t_sh *shell)
 		return (0);
 	else if (key == KEY_LEFT)
 		move_left(shell);
+	else if (key == KEY_RIGHT)
+		move_right(shell);
 	return (0);
 }
 /*

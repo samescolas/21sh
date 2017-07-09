@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 15:33:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/09 12:53:17 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	reset_shell(t_sh *shell)
 	shell->strt = get_cursor_position();
 	delete_coord(&shell->curr);
 	shell->curr = create_coord(
-			shell->strt->x + shell->prompt[0]->len, shell->strt->y);
+			shell->strt->x + shell->prompt[0]->len + 1, shell->strt->y);
 	shell->ix->x = 0;
 	shell->ix->y = 0;
 	shell->lines = 1;
