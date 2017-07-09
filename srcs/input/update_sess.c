@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/09 13:02:59 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/09 13:16:18 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 */
 int			update_printable(int key, t_sh *shell)
 {
-	t_coord	*tmp;
-
 	insert_str(shell->input[shell->ix->y], (char)key, (shell->ix->x)++);
 	write(1, &key, 1);
 	shell->curr->x += 1;
@@ -35,12 +33,7 @@ int			update_printable(int key, t_sh *shell)
 		write(1, "\r\n", 2);
 	}
 	if ((int)shell->ix->x != shell->input[shell->ix->y]->len)
-	{
-		tmp = get_cursor_position();
-		ft_putstr(&shell->input[shell->ix->y]->text[shell->ix->x]);
-		ft_write_loc((void *)0, *tmp);
-		delete_coord(&tmp);
-	}
+		write_return(&shell->input[shell->ix->y]->text[shell->ix->x]);
 	return (0);
 }
 
