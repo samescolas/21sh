@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 08:44:02 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 16:06:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/09 13:01:12 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	ft_hide_cursor(void)
 void	ft_write_loc(t_string *str, t_coord pos)
 {
 	tputs(tgoto(CM, pos.x, pos.y), 1, ft_putc);
-	write(1, str->text, str->len);
+	if (str)
+		write(1, str->text, str->len);
 }
