@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:36:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 16:50:41 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 16:56:53 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,7 @@ void	move_cursor_left(t_sh *shell)
 		}
 	}
 	else if (shell->curr->x == 0)
-	{
-		shell->curr->x = shell->term->x - 1;
-		shell->curr->y -= 1;
-		ft_move_cursor(K_UP, 1);
-		write(1, "\r", 1);
-		ft_move_cursor(K_RIGHT, shell->curr->x);
-		
-	}
+		wrap_left(shell);
 	else
 	{
 		shell->curr->x -= 1;

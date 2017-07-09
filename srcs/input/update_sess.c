@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/08 16:51:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/08 16:59:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 ** Function to write a printable character to the terminal,
 ** update session info, and move the cursor appropriately.
 */
-
 int			update_printable(int key, t_sh *shell)
 {
 	insert_str(shell->input[shell->ix->y], (char)key, (shell->ix->x)++);
@@ -37,9 +36,8 @@ int			update_printable(int key, t_sh *shell)
 }
 
 /*
-** Same as printable except for backspace.
+** To backspace we write over the current character and remove it from input.
 */
-
 int			update_bkspc(t_sh *shell)
 {
 	if (shell->input[shell->ix->y]->len > 0)
