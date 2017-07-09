@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/09 13:16:18 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/09 13:30:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,33 @@ int			update_printable(int key, t_sh *shell)
 		write(1, "\r\n", 2);
 	}
 	if ((int)shell->ix->x != shell->input[shell->ix->y]->len)
-		write_return(&shell->input[shell->ix->y]->text[shell->ix->x]);
+		write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr);
 	return (0);
 }
 
 /*
 ** To backspace we write over the current character and remove it from input.
 */
+
+int			update_bkspc(t_sh *shell)
+{
+	if (shell->input[shell->ix->y]->len > 0)
+	{
+		if (shell->ix->x == shell->ix->len)
+		{
+			ft_move_cursor(K_LEFT, 1);
+			write(1, " ", 1);
+		}
+		else
+		{
+			exit(1);
+		}
+	}
+	else
+	{
+	}
+}
+
 int			update_bkspc(t_sh *shell)
 {
 	if (shell->input[shell->ix->y]->len > 0)
