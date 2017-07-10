@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 11:11:54 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 15:34:10 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static const int KEY_DEL = 1725;
 
 # define IS_ARROWKEY(key) (key >= KEY_UP && key <= KEY_RIGHT)
 
-void			resize_input(t_sh *shell);
+void			resize_input(t_string ***input, int len);
 
 int				get_keypress(void);
 int				get_command_str(t_sh *shell);

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:36:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 09:31:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 15:01:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,12 @@ void	write_return(char *str, t_coord *start, int padding)
 	ft_write_loc((void *)0, *start);
 	//ft_write_loc((void *)0, *return_position);
 	//delete_coord(&return_position);
+}
+
+void	clear_line(int len)
+{
+	write(1, "\r", 1);
+	while (len--)
+		write(1, " ", 1);
+	write(1, "\r", 1);
 }
