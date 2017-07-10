@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 11:13:07 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 16:23:34 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,26 @@ int			update_bkspc(t_sh *shell)
 
 int			update_del(t_sh *shell)
 {
-	if (shell->input[shell->ix->y]->len > 0)
+	int		i;
+
+	if (shell->input[shell->ix->y]->len > 1)
 	{
 		remove_str(shell->input[shell->ix->y], shell->ix->x);
 		write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 1);
 	}
 	else if (shell->lines > 0)
 	{
-
+		remove_strarr(&shell->input, shell->ix->y, (shell->lines)--);
+		if (shell->ix->y == shell->lines)
+			move_left(shell);
+		i = shell->ix->y - 1;
+		while (++i < (int)shell->lines)
+		{
+			write(1, shell->input[i]->text, shell->input[i]->len);
+			write(1, "\n", 1);
+		}
+		clear_line(shell->term->x);
+		ft_write_loc((void *)0, *shell->curr);
 	}
 	return (0);
 }
@@ -99,18 +111,46 @@ int			update_arrowkey(int key, t_sh *shell)
 
 int			update_newline(t_sh *shell)
 {
-	if (shell->lines % BUFF_LINES == 0)
-		resize_input(shell);
+	if (shell->lines && shell->lines % BUFF_LINES == 0)
+		resize_input(&shell->input, shell->lines);
+	shell->ix->y += 1;
+	shell->curr->y += 1;
+	shell->ix->x = 0;
+	shell->curr->x = 0;
+	if (shell->ix->y == shell->lines)
+	{
+		shell->input[shell->ix->y] = create_str(ft_strnew(BUFF_SIZE));
+		shell->lines += 1;
+		write(1, "\n", 1);
+	}
 	else
+	{
+	}
+	return (0);
+}
+
+/*
+int			update_newline(t_sh *shell)
+{
+	if (++(shell->lines) % BUFF_LINES == 0)
+	{
+		write(1, "ere", 1);
+		resize_input(&shell->input, shell->lines);
+	}
+	else
+	{
+		write(1, "h", 1);
 		shell->input[shell->ix->y + 1] = create_str(ft_strnew(BUFF_SIZE));
+		write(1, "a", 1);
+	}
 	shell->ix->y += 1;
 	shell->ix->x = 0;
 	shell->curr->x = 0;
 	shell->curr->y += 1;
-	shell->lines += 1;
 	write(1, "\n\r", 2);
 	return (0);
 }
+*/
 
 int			update_home_end(int key, t_sh *shell)
 {
