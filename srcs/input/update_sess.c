@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 10:14:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 11:00:24 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int			update_bkspc(t_sh *shell)
 	}
 	else if (shell->ix->y > 0)
 	{
-		// this still needs to be tested
-		remove_strarr(&shell->input, (shell->ix->y)--, (shell->lines)--);
+		remove_strarr(&shell->input, shell->ix->y, (shell->lines)--);
+		move_left(shell);
 	}
 	return (0);
 }
@@ -102,8 +102,25 @@ int			update_home_end(int key, t_sh *shell)
 {
 	if (key == KEY_END)
 	{
-		while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
-			move_right(shell);
+		if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
+		{
+			while (shell->ix->y != shell->lines - 1)
+			{
+				ft_move_cursor(K_DOWN, 1);
+				write(1, "\r", 1);
+				shell->ix->y += 1;
+				shell->ix->x = 0;
+				shell->curr->x = 0;
+				shell->curr->y += 1;
+				while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
+					move_right(shell);
+			}
+		}
+		else
+		{
+			while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
+				move_right(shell);
+		}
 	}
 	else
 	{
