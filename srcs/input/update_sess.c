@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 09:47:36 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 10:06:32 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,7 @@ int			update_bkspc(t_sh *shell)
 	}
 	return (0);
 }
-/*
-int			update_bkspc(t_sh *shell)
-{
-	if (shell->input[shell->ix->y]->len > 0)
-	{
-		remove_str(shell->input[shell->ix->y], shell->ix->x - 1);
-		if (shell->curr->x == 0)
-		{
-			ft_move_cursor(K_UP, 1);
-			write(1, "\r", 1);
-			ft_move_cursor(K_RIGHT, shell->term->x - 1);
-			write(1, " \r\n", 3);
-		}
-		else
-		{
-			ft_move_cursor(K_LEFT, 1);
-			write(1, " ", 1);
-		}
-	}
-	else
-		// remove line from shell->input
-		return (1);
-	move_left(shell);
-	return (0);
-}
-*/
+
 int			update_arrowkey(int key, t_sh *shell)
 {
 	if (key == KEY_UP || key == KEY_DOWN)
@@ -107,6 +82,22 @@ int			update_arrowkey(int key, t_sh *shell)
 		move_right(shell);
 	return (0);
 }
+
+int			update_newline(t_sh *shell)
+{
+	if (shell->lines % BUFF_LINES == 0)
+		resize_input(shell);
+	else
+		shell->input[shell->ix->y + 1] = create_str(ft_strnew(BUFF_SIZE));
+	shell->ix->y += 1;
+	shell->ix->x = 0;
+	shell->curr->x = 0;
+	shell->curr->y += 1;
+	shell->lines += 1;
+	write(1, "\n\r", 2);
+	return (0);
+}
+
 /*
 int			update_bkspc(t_sess *sess)
 {
