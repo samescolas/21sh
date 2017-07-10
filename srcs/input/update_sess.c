@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 10:06:32 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 10:14:14 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,22 @@ int			update_newline(t_sh *shell)
 	shell->curr->y += 1;
 	shell->lines += 1;
 	write(1, "\n\r", 2);
+	return (0);
+}
+
+int			update_home_end(int key, t_sh *shell)
+{
+	if (key == KEY_END)
+	{
+		while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
+			move_right(shell);
+	}
+	else
+	{
+		while ((int)shell->ix->x > 0)
+			move_left(shell);
+
+	}
 	return (0);
 }
 
