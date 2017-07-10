@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 09:33:32 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 09:47:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int			update_bkspc(t_sh *shell)
 	}
 	else if (shell->ix->y > 0)
 	{
-		/* delete line if not first line */
+		// this still needs to be tested
+		remove_strarr(&shell->input, (shell->ix->y)--, (shell->lines)--);
 	}
 	return (0);
 }
