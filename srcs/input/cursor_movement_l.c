@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:36:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/09 12:30:05 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 10:54:36 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ void	move_ix_left(t_sh *shell)
 
 void	move_cursor_left(t_sh *shell)
 {
+	int	tmp;
 	if (shell->ix->x == 0)
 	{
 		if (shell->ix->y > 0)
 		{
-			shell->curr->x = shell->ix->x % shell->term->x;
 			shell->curr->y -= 1;
-			ft_move_cursor(K_UP, 1);
-			write(1, "\r", 1);
-			ft_move_cursor(K_RIGHT, shell->curr->x - 1);
+			tmp = shell->input[shell->ix->y - 1]->len;
+			if (shell->curr->y == shell->strt->y)
+				tmp += (shell->prompt[0]->len + 1);
+			shell->curr->x = tmp % shell->term->x;
+			write_return((void *)0, shell->curr, 0);
 		}
 	}
 	else if (shell->curr->x == 0)
