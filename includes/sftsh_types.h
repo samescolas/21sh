@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 16:41:18 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 09:47:08 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_string				*remove_str(t_string *str, int ix);
 t_string				*join_strs(t_string **arr, int len, char glue);
 void					free_str(t_string **str);
 void					free_strarr(t_string ***strs, int len);
+void					remove_strarr(t_string ***strs, int ix, int len);
 
 t_command				*create_command(char **args, char ***env, int num_args);
 void					add_command(t_command **queue, t_command *command);
