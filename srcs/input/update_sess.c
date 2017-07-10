@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 11:00:24 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 11:13:07 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,20 @@ int			update_bkspc(t_sh *shell)
 	return (0);
 }
 
+int			update_del(t_sh *shell)
+{
+	if (shell->input[shell->ix->y]->len > 0)
+	{
+		remove_str(shell->input[shell->ix->y], shell->ix->x);
+		write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 1);
+	}
+	else if (shell->lines > 0)
+	{
+
+	}
+	return (0);
+}
+
 int			update_arrowkey(int key, t_sh *shell)
 {
 	if (key == KEY_UP || key == KEY_DOWN)
@@ -132,49 +146,6 @@ int			update_home_end(int key, t_sh *shell)
 }
 
 /*
-int			update_bkspc(t_sess *sess)
-{
-	char	bkspc[3];
-
-	if (sess->input_ix == 0)
-	{
-		if (sess->input_line > 0)
-		{
-			sess->num_lines -= 1;
-			free_str(&sess->input_text[(sess->input_line)--]);
-			sess->input_ix = sess->input_text[sess->input_line]->len;
-			sess->cursor->y -= 1;
-			sess->cursor->x = (
-				sess->input_text[sess->input_line]->len < sess->term_width - 1 ?
-				sess->input_text[sess->input_line]->len : sess->term_width - 1);
-			if (sess->cursor->y == 0)
-				sess->cursor->x += (sess->prompt_str->len + 1);
-			ft_move_cursor(K_UP, 1);
-			write(1, "\r", 1);
-			ft_move_cursor(K_RIGHT, sess->cursor->x);
-			return (0);
-		}
-		else
-			return (0);
-	}
-	bkspc[0] = 8;
-	bkspc[1] = 32;
-	bkspc[2] = 8;
-	if (sess->cursor->x == 0)
-	{
-		ft_move_cursor(K_UP, 1);
-		ft_move_cursor(K_RIGHT, sess->term_width - 1);
-		write(1, &bkspc[1], 1);
-	}
-	else
-		write(1, &bkspc, 3);
-	move_left(sess);
-	sess->input_ix -= 1;
-	remove_str(sess->input_text[sess->input_line], sess->input_ix);
-	sess->input_len -= 1;
-	return (-1);
-}
-
 int			update_del(t_sess *sess)
 {
 	int		len;
