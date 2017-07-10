@@ -6,13 +6,15 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:44:42 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 09:32:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 15:02:12 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 typedef struct s_sh	t_sh;
 
 void	write_return(char *str, t_coord *start, int padding);
+
+void	clear_line(int len);
 
 void	wrap_left(t_sh *shell);
 void	wrap_right(t_sh *shell);
