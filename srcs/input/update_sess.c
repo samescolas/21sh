@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/09 13:30:00 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 09:24:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 /*
 ** Function to write a printable character to the terminal,
 ** update session info, and move the cursor appropriately.
+** If the cursor is not at the end of the line, the remainder
+** of the line must be shifted to the right.
 */
 int			update_printable(int key, t_sh *shell)
 {
@@ -45,21 +47,35 @@ int			update_bkspc(t_sh *shell)
 {
 	if (shell->input[shell->ix->y]->len > 0)
 	{
-		if (shell->ix->x == shell->ix->len)
+		if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
 		{
-			ft_move_cursor(K_LEFT, 1);
-			write(1, " ", 1);
+			if (shell->curr->x > 0)
+			{
+				ft_move_cursor(K_LEFT, 1);
+				write(1, " ", 1);
+			}
+			else
+			{
+				ft_move_cursor(K_UP, 1);
+				write(1, "\r", 1);
+				ft_move_cursor(K_RIGHT, shell->term->x - 1);
+				write(1, " \r\n", 3);
+			}
+			move_left(shell);
 		}
 		else
 		{
 			exit(1);
 		}
+		remove_str(shell->input[shell->ix->y], shell->ix->x);
 	}
-	else
+	else if (shell->ix->y > 0)
 	{
+		/* delete line if not first line */
 	}
+	return (0);
 }
-
+/*
 int			update_bkspc(t_sh *shell)
 {
 	if (shell->input[shell->ix->y]->len > 0)
@@ -79,12 +95,12 @@ int			update_bkspc(t_sh *shell)
 		}
 	}
 	else
-		/* remove line from shell->input */
+		// remove line from shell->input
 		return (1);
 	move_left(shell);
 	return (0);
 }
-
+*/
 int			update_arrowkey(int key, t_sh *shell)
 {
 	if (key == KEY_UP || key == KEY_DOWN)
