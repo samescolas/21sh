@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/09 12:53:17 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 09:54:26 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static int process_keypress(int key, t_sh *shell)
 		return (update_bkspc(shell));
 	else if (IS_ARROWKEY(key))
 		return (update_arrowkey(key, shell));
+	else if (key == '\n')
+		return (update_newline(shell));
 	return (0);
 	/*
 	//else if (key == KEY_HOME || key == KEY_END)
@@ -101,6 +103,11 @@ int		get_command_str(t_sh *shell)
 		{
 			if (valid_brackets(shell->input, shell->lines) == 1 && valid_quotes(shell->input, shell->lines) == 1)
 				break ;
+			else
+			{
+				if (process_keypress('\n', shell) < 0)
+					return (1);
+			}
 		}
 		else if (key != '\0')
 			if (process_keypress(key, shell) == 42)
