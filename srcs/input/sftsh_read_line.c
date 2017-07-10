@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 10:11:17 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 11:12:22 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,9 @@ static int process_keypress(int key, t_sh *shell)
 		return (update_newline(shell));
 	else if (key == KEY_HOME || key == KEY_END)
 		return (update_home_end(key, shell));
-	return (0);
-	/*
-	else if (key == KEY_DEL && shell->input_len > 0)
+	else if (key == KEY_DEL)
 		return (update_del(shell));
-	else if (key == KEY_ENTER)
-		return (update_newline(shell));
-	else
-		write(1, &key, 1);
 	return (0);
-	*/
 }
 
 int		get_command_str(t_sh *shell)
