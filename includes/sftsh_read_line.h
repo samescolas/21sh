@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/11 10:18:40 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/11 11:04:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int				update_printable(int key, t_sh *shell);
 int				update_bkspc(t_sh *shell);
 int				update_arrowkey(int key, t_sh *shell);
 int				update_newline(t_sh *shell);
-int				update_home_end(int key, t_sh *shell);
+int				update_home(t_sh *shell);
+int				update_end(t_sh *shell);
 int				update_del(t_sh *shell);
 
 #endif
