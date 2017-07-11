@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:36:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 15:01:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/11 10:28:06 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,28 @@ void	clear_line(int len)
 	while (len--)
 		write(1, " ", 1);
 	write(1, "\r", 1);
+}
+
+void	write_arr_return(t_string **arr, t_coord *start, int len)
+{
+	int		ix;
+	int		term_width;
+
+	ix = 0;
+	term_width = get_term_width();
+	clear_line(term_width);
+	write(1, arr[ix]->text, arr[ix]->len);
+	while (++ix < len)
+	{
+		write(1, "\n", 1);
+		clear_line(term_width);
+		write(1, arr[ix]->text, arr[ix]->len);
+	}
+	ix = -1;
+	while (++ix < len)
+	{
+		write(1, "\n\r", 2);
+		clear_line(term_width);
+	}
+	ft_write_loc((void *)0, *start);
 }
