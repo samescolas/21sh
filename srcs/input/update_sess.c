@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 18:22:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/11 10:23:03 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int			update_bkspc(t_sh *shell)
 	{
 		remove_strarr(&shell->input, shell->ix->y, (shell->lines)--);
 		move_left(shell);
+		write(1, "\n", 1);
+		write_arr_return(&shell->input[shell->ix->y + 1], shell->curr, shell->lines - shell->ix->y - 1);
 	}
 	return (0);
 }
