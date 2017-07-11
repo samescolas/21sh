@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 16:23:34 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 18:22:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,21 +111,32 @@ int			update_arrowkey(int key, t_sh *shell)
 
 int			update_newline(t_sh *shell)
 {
+	int		i;
+
 	if (shell->lines && shell->lines % BUFF_LINES == 0)
-		resize_input(&shell->input, shell->lines);
+	 	resize_input(&shell->input, shell->lines);
+	if (shell->ix->y + 1 == shell->lines)
+	{
+		shell->input[shell->ix->y + 1] = create_str(ft_strnew(BUFF_SIZE));
+	}
+	else
+	{
+		insert_strarr(&shell->input, create_str(ft_strnew(BUFF_SIZE)), shell->ix->y + 1, shell->lines);
+		i = shell->ix->y - 1;
+		while (++i < (int)shell->lines)
+		{
+			write(1, shell->input[i]->text, shell->input[i]->len);
+			write(1, "\n", 1);
+		}
+		clear_line(shell->term->x);
+		ft_write_loc((void *)0, *shell->curr);
+	}
+	shell->lines += 1;
 	shell->ix->y += 1;
 	shell->curr->y += 1;
 	shell->ix->x = 0;
 	shell->curr->x = 0;
-	if (shell->ix->y == shell->lines)
-	{
-		shell->input[shell->ix->y] = create_str(ft_strnew(BUFF_SIZE));
-		shell->lines += 1;
-		write(1, "\n", 1);
-	}
-	else
-	{
-	}
+	write(1, "\n", 1);
 	return (0);
 }
 

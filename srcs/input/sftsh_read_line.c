@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 16:17:09 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 17:56:51 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static int process_keypress(int key, t_sh *shell)
 int		get_command_str(t_sh *shell)
 {
 	int		key;
-	t_coord	*tmp;
 
 	reset_shell(shell);
 	ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
@@ -102,11 +101,12 @@ int		get_command_str(t_sh *shell)
 			continue ;
 		if (key == 'P')
 		{
-			tmp = get_cursor_position();
-			ft_putstr("\n(");
-			ft_putnbr(tmp->x);
+			ft_putstr("\nlines: ");
+			ft_putnbr(shell->lines);
+			ft_putstr("\t(");
+			ft_putnbr(shell->ix->x);
 			ft_putstr(", ");
-			ft_putnbr(tmp->y);
+			ft_putnbr(shell->ix->y);
 			ft_putstr(")\n");
 			exit(0);
 		}

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 10:55:29 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 09:44:20 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/10 18:21:38 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,24 @@ void	free_strarr(t_string ***strs, int len)
 	ix = -1;
 	while (++ix < len)
 		free_str(&(*strs)[ix]);
-	*strs = (void *)0;
+	//*strs = (void *)0;
+}
+
+t_string	**insert_strarr(t_string ***strs, t_string *str, int ix, int len)
+{
+	while (len > ix)
+	{
+		(*strs)[len] = (*strs)[len - 1];
+		--len;
+	}
+	(*strs)[ix - 1] = str;
+	return (*strs);
 }
 
 void	remove_strarr(t_string ***strs, int ix, int len)
 {
 	int		to_shift;
+		ft_putnbr(ix);
 
 	to_shift = len - ix + 1;
 	free_str(&(*strs)[ix]);
