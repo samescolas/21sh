@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/11 11:01:09 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/11 11:42:53 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int			update_printable(int key, t_sh *shell)
 		write(1, "\r\n", 2);
 	}
 	if ((int)shell->ix->x != shell->input[shell->ix->y]->len)
-		write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 0);
+		write_arr_return(&shell->input[shell->ix->y], shell->curr, shell->lines - shell->ix->y);
+		//write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 0);
 	return (0);
 }
 
@@ -174,35 +175,58 @@ int			update_newline(t_sh *shell)
 }
 */
 
-int			update_home_end(int key, t_sh *shell)
+int			update_home(t_sh *shell)
 {
-	if (key == KEY_END)
+	if ((int)shell->ix->x == 0)
 	{
-		if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
+
+		ft_write_loc((void *)0, *shell->strt);
+		ft_move_cursor(K_RIGHT, shell->prompt[0]->len + 1);
+		shell->ix->x = 0;
+		shell->ix->y = 0;
+		shell->curr->x = shell->strt->x;
+		shell->curr->y = shell->strt->y + shell->prompt[0]->len + 1;
+		//while ((int)shell->ix->y > 0)
+		//{
+			////ft_move_cursor(K_UP, 1);
+			////write(1, "\r", 1);
+			//wrap_left(shell);
+			//shell->ix->y -= 1;
+			//shell->ix->x = shell->input[shell->ix->y]->len;
+			////shell->curr->x = shell->term->x - 1;
+			////shell->curr->y -= 1;
+			//while ((int)shell->ix->x > 0)
+				//move_left(shell);
+		//}
+	}
+	else
+	{
+		while ((int)shell->ix->x > 0)
+			move_left(shell);
+	}
+	return (0);
+}
+
+int			update_end(t_sh *shell)
+{
+	if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
+	{
+		while (shell->ix->y != shell->lines - 1)
 		{
-			while (shell->ix->y != shell->lines - 1)
-			{
-				ft_move_cursor(K_DOWN, 1);
-				write(1, "\r", 1);
-				shell->ix->y += 1;
-				shell->ix->x = 0;
-				shell->curr->x = 0;
-				shell->curr->y += 1;
-				while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
-					move_right(shell);
-			}
-		}
-		else
-		{
+			ft_move_cursor(K_DOWN, 1);
+			write(1, "\r", 1);
+			shell->ix->y += 1;
+			shell->ix->x = 0;
+			shell->curr->x = 0;
+			shell->curr->y += 1;
 			while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
 				move_right(shell);
 		}
 	}
 	else
 	{
-		while ((int)shell->ix->x > 0)
-			move_left(shell);
-
+		while ((int)shell->ix->x != shell->input[shell->ix->y]->len)
+			move_right(shell);
 	}
 	return (0);
 }
