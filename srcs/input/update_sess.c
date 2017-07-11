@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/11 10:23:03 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/07/11 11:01:09 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,21 @@ int			update_bkspc(t_sh *shell)
 		if ((int)shell->ix->x < shell->input[shell->ix->y]->len)
 			write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 1);
 	}
-	else if (shell->ix->y > 0)
+	else if (shell->ix->y > 0 && shell->input[shell->ix->y]->len == 0)
 	{
 		remove_strarr(&shell->input, shell->ix->y, (shell->lines)--);
 		move_left(shell);
-		write(1, "\n", 1);
-		write_arr_return(&shell->input[shell->ix->y + 1], shell->curr, shell->lines - shell->ix->y - 1);
+		if (shell->ix->y + 1 < shell->lines)
+		{
+			write(1, "\n", 1);
+			write_arr_return(&shell->input[shell->ix->y + 1], shell->curr, shell->lines - shell->ix->y - 1);
+		}
+		else
+		{
+			write(1, "\n", 1);
+			clear_line(get_term_width());
+			ft_write_loc((void *)0, *(shell->curr));
+		}
 	}
 	return (0);
 }
