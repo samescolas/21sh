@@ -6,7 +6,7 @@
 #    By: sescolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 16:16:10 by sescolas          #+#    #+#              #
-#    Updated: 2017/06/23 10:11:52 by sescolas         ###   ########.fr        #
+#    Updated: 2017/09/01 17:25:57 by sescolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LINK = -L libft $(foreach LIB,$(TO_LINK), -l$(LIB))
 HEADERS = $(wildcard includes/*.h$)
 SRC_DIRS = build builtins input lexer types utils
 SRCS = $(foreach DIR,$(SRC_DIRS), $(addprefix ,$(wildcard srcs/$(DIR)/*.c$)))
-OBJS = $(notdir $(SRCS:.c=.o))
+OBJS = $(foreach OBJ,$(notdir $(SRCS:.c=.o)),.objs/$(OBJ))
 
 all : $(NAME)
 
@@ -32,7 +32,7 @@ $(NAME) : $(OBJS)
 	$(CC) .objs/*.o $(LINK) -o $@
 
 $(OBJS) : $(SRCS) $(HEADERS) $(LIBFT)
-	$(CC) $(CFLAGS) -Iincludes -c $(shell find . -name $(notdir $(@:.o=.c))) -o .objs/$@
+	$(CC) $(CFLAGS) -Iincludes -c $(shell find . -name $(notdir $(@:.o=.c))) -o $@
 
 $(LIBFT) : $(LIB_DEPS)
 	make -C libft
@@ -40,7 +40,7 @@ $(LIBFT) : $(LIB_DEPS)
 .PHONY : clean fclean re print
 
 print :
-	@echo $(OBJS)
+	@echo $(OBJDEPS)
 
 clean :
 	rm -f libft/*\.o$
