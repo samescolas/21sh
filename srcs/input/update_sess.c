@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/11 11:42:53 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/01 18:15:10 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int			update_printable(int key, t_sh *shell)
 		shell->curr->y += 1;
 		write(1, "\r\n", 2);
 	}
-	if ((int)shell->ix->x != shell->input[shell->ix->y]->len)
+	if ((int)shell->ix->y == 0 && shell->ix->x < get_term_width())
+		write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 0);
+	else if ((int)shell->ix->x != shell->input[shell->ix->y]->len)
 		write_arr_return(&shell->input[shell->ix->y], shell->curr, shell->lines - shell->ix->y);
 		//write_return(&shell->input[shell->ix->y]->text[shell->ix->x], shell->curr, 0);
 	return (0);
