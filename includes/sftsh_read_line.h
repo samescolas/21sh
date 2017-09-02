@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/11 11:04:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/01 18:31:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,10 @@ int				update_newline(t_sh *shell);
 int				update_home(t_sh *shell);
 int				update_end(t_sh *shell);
 int				update_del(t_sh *shell);
+
+int				enter_vim_mode(t_sh *shell);
+int				is_vimarrow(int key);
+int				update_vimarrow(int key, t_sh *shell);
+int				update_vimword(int key, t_sh *shell);
 
 #endif
