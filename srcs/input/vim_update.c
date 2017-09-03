@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:28:47 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 14:18:41 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 15:26:07 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int			update_vimword(int key, t_sh *shell)
 			move_right(shell);
 	else if (is_symbol)
 		while ((int)shell->ix->x < shell->input[shell->ix->y]->len &&
-				!ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
+				!ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]))
 			move_right(shell);
 	else
 		while ((int)shell->ix->x < shell->input[shell->ix->y]->len &&
-				ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
+				ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]))
 			move_right(shell);
 	if (shell->input[shell->ix->y]->text[shell->ix->x] == ' ')
 		move_right(shell);
