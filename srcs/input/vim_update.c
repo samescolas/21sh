@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:28:47 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 11:51:58 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:23:26 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sftsh_types.h"
 #include "ft_termcap.h"
 #include "../../libft/libft.h"
+#include "movement.h"
 
 /*
 int		update_vimarrow(int key, t_sh *shell)
@@ -47,13 +48,13 @@ int		update_vimword(int key, t_sh *shell)
 {
 	if (ft_toupper(key) == 'W')
 	{
-		if (shell->ix->x == shell->input[shell->ix->y]->len)
+		if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
 			return (1);
 		if (key == 'W')
-			shell->ix->x += ft_strfind(&shell->input[shell->ix->y][shell->ix->x + 1], ' ');
+			shell->ix->x += ft_strfind(&shell->input[shell->ix->y]->text[shell->ix->x + 1], ' ');
 		else
 		{
-			while (ft_isalpha(shell->input[shell->ix->y][shell->ix->x]))
+			while (ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
 				move_right(shell);
 		}
 	}
@@ -64,13 +65,13 @@ int		update_vimword(int key, t_sh *shell)
 		if (key == 'B')
 		{
 			while (shell->ix->x > 0)
-				if (ft_isalpha(shell->input[shell->ix->y][--(shell->ix->x)]))
+				if (ft_isalpha(shell->input[shell->ix->y]->text[--(shell->ix->x)]))
 					break ;
 		}
 		else
 		{
 			while (shell->ix->x > 0)
-				if (shell->input[shell->ix->y][--(shell->ix->x)] == ' ')
+				if (shell->input[shell->ix->y]->text[--(shell->ix->x)] == ' ')
 					break ;
 		}
 	}

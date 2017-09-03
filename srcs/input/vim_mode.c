@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:13:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 11:53:06 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:31:01 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int		enter_vim_mode(t_sh *shell)
 
 	while ((key = get_keypress()) != KEY_ENTER)
 	{
+		if (key == 'i')
+			return (0);
 		if (key == '\0')
 			continue ;
-		if (process_vimkey(key, shell) == 0)
+		if (process_vimkey(key, shell) != 0)
 			return (1);
 	}
 	return (key == KEY_ENTER);

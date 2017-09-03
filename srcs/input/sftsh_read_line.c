@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/01 18:18:17 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:27:52 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ int		get_command_str(t_sh *shell)
 			ft_putstr(")\n");
 			exit(0);
 		}
-		if (key == KEY_ESCAPE)
-			return (enter_vim_mode(shell));
+		if (key == KEY_ESCAPE && enter_vim_mode(shell) == 1)
+			return (1);
 		else if (key == KEY_ENTER)
 		{
 			if (valid_brackets(shell->input, shell->lines) == 1 && valid_quotes(shell->input, shell->lines) == 1)

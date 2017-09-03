@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 16:51:27 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:27:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ int			sftsh(char ***envp)
 		*/
 		disp_input(shell->input, shell->lines);
 	}
-	return (1);
+	return (0);
 	//return (delete_prompt(sess->prompt));
 }
