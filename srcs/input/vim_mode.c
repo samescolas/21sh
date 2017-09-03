@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:13:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 13:31:01 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 14:35:25 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,21 @@ static int	process_vimkey(int key, t_sh *shell)
 	return (0);
 }
 
-int		enter_vim_mode(t_sh *shell)
+static int	ft_vimrepeat(int key, t_sh *shell)
+{
+	int		times;
+	int		success;
+
+	success = 0;
+	times = key - '0';
+	while (ft_isdigit((key = get_keypress())))
+		times = 10 * times + (key - '0');
+	while (times--)
+		success += process_vimkey(key, shell);
+	return (success);
+}
+
+int			enter_vim_mode(t_sh *shell)
 {
 	int		key;
 
@@ -33,6 +47,8 @@ int		enter_vim_mode(t_sh *shell)
 			return (0);
 		if (key == '\0')
 			continue ;
+		if (ft_isdigit(key) && ft_vimrepeat(key, shell) < 0)
+			return (1);
 		if (process_vimkey(key, shell) != 0)
 			return (1);
 	}
