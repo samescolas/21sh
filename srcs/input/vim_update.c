@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:28:47 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 14:12:58 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 14:18:41 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,7 @@
 #include "../../libft/libft.h"
 #include "movement.h"
 
-/*
-int		update_vimarrow(int key, t_sh *shell)
-{
-	if (key == 'h' || key == KEY_LEFT)
-		return (update_arrowkey(KEY_LEFT, sess));
-	else if (key == 'l' || key == KEY_RIGHT)
-		return (update_arrowkey(KEY_RIGHT, sess));
-	else if (key == 'j' || key == KEY_DOWN)
-		return (update_arrowkey(KEY_DOWN, sess));
-	else if (key == 'k' || key == KEY_UP)
-		return (update_arrowkey(KEY_UP, sess));
-	return (1);
-}
-*/
-
-int		update_vimarrow(int key, t_sh *shell)
+int			update_vimarrow(int key, t_sh *shell)
 {
 	if (key == 'h')
 		key = KEY_LEFT;
@@ -56,49 +41,45 @@ static int	update_vimback(int key, t_sh *shell)
 		is_symbol = 1;
 	move_left(shell);
 	if (key == 'B')
-	{
-		while (shell->ix > 0 && shell->input[shell->ix->y]->text[shell->ix->x] != ' ')
+		while (shell->ix > 0 &&
+						shell->input[shell->ix->y]->text[shell->ix->x] != ' ')
 			move_left(shell);
-	}
 	else if (is_symbol)
-	{
-		while (shell->ix->x > 0 && !ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]))
+		while (shell->ix->x > 0 &&
+					!ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]))
 			move_left(shell);
-	}
 	else
-	{
-		while (shell->ix->x > 0 && ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]))
+		while (shell->ix->x > 0 &&
+					ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]))
 			move_left(shell);
-	}
 	if (shell->ix > 0 && shell->input[shell->ix->y]->text[shell->ix->x] == ' ')
 		move_left(shell);
 	return (0);
 }
 
-int		update_vimword(int key, t_sh *shell)
+int			update_vimword(int key, t_sh *shell)
 {
 	char	is_symbol;
 
-	if (ft_toupper(key) == 'W')
-	{
-		if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
-			return (0);
-		is_symbol = !ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]);
-		move_right(shell);
-		if (key == 'W')
-			while ((int)shell->ix->x < shell->input[shell->ix->y]->len && shell->input[shell->ix->y]->text[shell->ix->x] != ' ')
-				move_right(shell);
-		else if (is_symbol)
-			while ((int)shell->ix->x < shell->input[shell->ix->y]->len && !ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
-				move_right(shell);
-		else
-			while ((int)shell->ix->x < shell->input[shell->ix->y]->len && ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
-				move_right(shell);
-		if (shell->input[shell->ix->y]->text[shell->ix->x] == ' ')
-			move_right(shell);
-		return (0);
-	}
-	else if (ft_toupper(key) == 'B')
+	if (ft_toupper(key) == 'B')
 		return (update_vimback(key, shell));
-	return (1);
+	if ((int)shell->ix->x == shell->input[shell->ix->y]->len)
+		return (0);
+	is_symbol = !ft_isalnum(shell->input[shell->ix->y]->text[shell->ix->x]);
+	move_right(shell);
+	if (key == 'W')
+		while ((int)shell->ix->x < shell->input[shell->ix->y]->len &&
+					shell->input[shell->ix->y]->text[shell->ix->x] != ' ')
+			move_right(shell);
+	else if (is_symbol)
+		while ((int)shell->ix->x < shell->input[shell->ix->y]->len &&
+				!ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
+			move_right(shell);
+	else
+		while ((int)shell->ix->x < shell->input[shell->ix->y]->len &&
+				ft_isalpha(shell->input[shell->ix->y]->text[shell->ix->x]))
+			move_right(shell);
+	if (shell->input[shell->ix->y]->text[shell->ix->x] == ' ')
+		move_right(shell);
+	return (0);
 }
