@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 13:27:52 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:39:47 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,6 @@ void		resize_input(t_string ***input, int len)
 	free(*input);
 	*input = tmp;
 }
-
-/*
-void		resize_input(t_sh *shell)
-{
-	t_string	**tmp;
-	int			i;
-
-	if(!(tmp = (t_string **)malloc((shell->lines + BUFF_LINES) * sizeof(t_string *))))
-		ft_fatal("err: out of memory\n");
-	i = -1;
-	while (++i < (int)shell->lines)
-		tmp[i] = shell->input[i];
-	tmp[i] = create_str(ft_strnew(BUFF_SIZE));
-	write(1, shell->input[0]->text, shell->input[0]->len);
-	free_strarr(&shell->input, shell->lines);
-	&shell->input = &tmp;
-	write(1, "here", 4);
-	write(1, shell->input[0]->text, shell->input[0]->len);
-	write(1, "z", 1);
-}
-*/
 
 void	reset_shell(t_sh *shell)
 {
@@ -97,7 +76,7 @@ int		get_command_str(t_sh *shell)
 
 	reset_shell(shell);
 	ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
-	while ((key = get_keypress()) != '~')
+	while ((key = get_keypress()) != '\0')
 	{
 		if (!key)
 			continue ;

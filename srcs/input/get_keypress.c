@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 09:26:41 by sescolas          #+#    #+#             */
-/*   Updated: 2017/06/28 16:08:48 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:40:40 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ int			get_keypress(void)
 		else
 			return ((int)ret);
 	}
+	else
+		return (get_keypress());
 	return ((int)'\0');
 }
