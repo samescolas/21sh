@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:28:47 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/01 18:28:37 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 11:51:58 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		update_vimword(int key, t_sh *shell)
 		else
 		{
 			while (ft_isalpha(shell->input[shell->ix->y][shell->ix->x]))
-				++(shell->ix->x);
+				move_right(shell);
 		}
 	}
 	else if (ft_toupper(key) == 'B')

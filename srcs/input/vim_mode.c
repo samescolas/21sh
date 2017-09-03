@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:13:21 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/01 18:19:31 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 11:53:06 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ static int	process_vimkey(int key, t_sh *shell)
 	return (0);
 }
 
-static int	render_vimkey(int key, t_sh *shell)
-{
-	if (is_vimarrow(key))
-		return (render_vimarrow(key));
-	else if (ft_toupper(key) == 'W' || ft_toupper(key) == 'B')
-		return (render_vimword(shell));
-	return (shell != (void *)0);
-}
-
 int		enter_vim_mode(t_sh *shell)
 {
 	int		key;
@@ -41,10 +32,7 @@ int		enter_vim_mode(t_sh *shell)
 		if (key == '\0')
 			continue ;
 		if (process_vimkey(key, shell) == 0)
-		{
-			if (render_vimkey(key, shell) != 0)
-				return (1);
-		}
+			return (1);
 	}
 	return (key == KEY_ENTER);
 }
