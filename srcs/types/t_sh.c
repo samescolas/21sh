@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 14:33:09 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 19:48:15 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:53:20 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ t_sh	*create_sh()
 		shell->ix = create_coord(0, 0);
 		shell->term = create_coord(get_term_width(), get_term_height());
 		shell->lines = 1;
-		shell->history = create_list_item(ft_strdup("the beginning of time"));
-		shell->history->next = shell->history;
-		shell->history->prev = shell->history;
+		shell->history = init_history();
 	}
 	return (shell);
 }
 
+/*
 static void	print_list(t_list *list)
 {
 	t_list	*tmp;
@@ -57,6 +56,7 @@ static void	print_list(t_list *list)
 		tmp = tmp->next;
 	}
 }
+*/
 
 int		update_shell_history(t_sh *shell)
 {
@@ -64,11 +64,8 @@ int		update_shell_history(t_sh *shell)
 
 
 	tmp = join_strs(shell->input, shell->lines, '\n');
-	ft_putendl(tmp->text);
-	list_add(&shell->history, create_list_item(tmp->text));
-	ft_putstr("adding ");
-	ft_putstr(tmp->text);
-	ft_putendl(" to list...\n\nlist:");
-	print_list(shell->history);
+	if (ft_strcmp(tmp->text, shell->history->list->prev->str->text) == 0)
+		return (0);
+	add_history(shell->history, tmp->text);
 	return (0);
 }

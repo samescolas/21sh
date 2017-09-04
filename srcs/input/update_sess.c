@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 19:54:21 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:52:10 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,30 +114,26 @@ int			update_del(t_sh *shell)
 
 int			update_arrowkey(int key, t_sh *shell)
 {
-	int		i;
-	t_list	*tmp;
-
-	i = 0;
 	if (key == KEY_UP || key == KEY_DOWN)
 	{
-		update_shell_history(shell);
-		while (1742)
+		if ((shell->lines > 1 || shell->input[0]->len > 0) && !shell->history->cursor)
+			update_shell_history(shell);
+		if (shell->history->cursor)
 		{
-			write(1, "looping\n", 8);
-			if (!IS_ARROWKEY((key = get_keypress())))
-				break ;
-			++i;
-			tmp = shell->history;
-			if (key == KEY_UP)
-				tmp = tmp->next;
-			else if (key == KEY_DOWN)
-				tmp = tmp->prev;
+			if (key == KEY_DOWN)
+				shell->history->cursor = shell->history->cursor->next;
 			else
-				break ;
-			ft_write_loc((void *)0, *shell->strt);
-			ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
-			write(1, tmp->str->text, tmp->str->len);
+				shell->history->cursor = shell->history->cursor->prev;
 		}
+		else
+			shell->history->cursor = shell->history->list->prev;
+		clear_line(shell->term->x);
+		ft_write_loc((void *)0, (*shell->strt));
+		ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
+		write_return(shell->history->cursor->str->text, shell->curr, 1);
+		//free_strarr(&shell->input, shell->lines);
+		shell->input = split_strs(shell->history->cursor->str, '\n');
+		return (0);
 	}
 	if (key == KEY_LEFT)
 		move_left(shell);

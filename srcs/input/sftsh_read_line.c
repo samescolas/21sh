@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 19:23:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:33:19 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	reset_shell(t_sh *shell)
 	shell->ix->x = 0;
 	shell->ix->y = 0;
 	shell->lines = 1;
+	shell->history->cursor = (void *)0;
 }
 
 /*

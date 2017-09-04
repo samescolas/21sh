@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/03 18:35:10 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 19:07:05 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:18:39 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*create_list_item(char *str)
 	if (!(ret = (t_list *)malloc(sizeof(t_list))))
 		ft_fatal("err: out of memory\n");
 	if (str)
-		ret->str = create_str(str);
+		ret->str = create_str(ft_strdup(str));
 	ret->next = NULL;
 	ret->prev = NULL;
 	return (ret);

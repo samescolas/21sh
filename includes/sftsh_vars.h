@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 12:18:29 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 16:02:43 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:25:31 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <signal.h>
 
 # define MAX_PATHLEN 512
+
+# define MAX_HISTORY 10
 
 # define DEFAULT_TERM "xterm-256color"
 # define DEFAULT_PATH "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"

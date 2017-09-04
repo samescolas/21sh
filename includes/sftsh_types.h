@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 18:51:14 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:38:10 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef struct			s_command
 	struct s_command	*next;
 }						t_command;
 
+typedef struct			s_history
+{
+	t_list				*list;
+	t_list				*cursor;
+	size_t				len;
+}						t_history;
+
 typedef struct			s_coord
 {
 	size_t				x;
@@ -54,7 +61,7 @@ typedef struct			s_sh
 	t_coord				*curr;
 	t_coord				*ix;
 	t_coord				*term;
-	t_list				*history;
+	t_history			*history;
 	size_t				lines;
 }						t_sh;
 
@@ -63,6 +70,7 @@ t_string				*append_str(t_string *str, char c);
 t_string				*insert_str(t_string *str, char c, int ix);
 t_string				*remove_str(t_string *str, int ix);
 t_string				*join_strs(t_string **arr, int len, char glue);
+t_string				**split_strs(t_string *arr, char glue);
 void					free_str(t_string **str);
 void					free_strarr(t_string ***strs, int len);
 void					remove_strarr(t_string ***strs, int ix, int len);
@@ -80,6 +88,9 @@ void					free_command(t_command *command);
 
 t_coord					*create_coord(size_t z, size_t y);
 void					delete_coord(t_coord **coord);
+
+t_history				*init_history(void);
+void					add_history(t_history *hist, char *item);
 
 t_sh					*create_sh(void);
 
