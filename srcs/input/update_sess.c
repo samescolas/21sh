@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 09:11:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 11:52:10 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 14:36:23 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ int			update_arrowkey(int key, t_sh *shell)
 		move_left(shell);
 	else if (key == KEY_RIGHT)
 		move_right(shell);
-	else
-		return (process_keypress(key, shell));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:36:43 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/11 10:28:06 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 14:18:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,10 @@ void	wrap_right(t_sh *shell)
 
 void	write_return(char *str, t_coord *start, int padding)
 {
-	//t_coord	*return_position;
-
-	//return_position = get_cursor_position();
 	ft_putstr(str);
 	while (padding--)
 		write(1, " ", 1);
 	ft_write_loc((void *)0, *start);
-	//ft_write_loc((void *)0, *return_position);
-	//delete_coord(&return_position);
 }
 
 void	clear_line(int len)

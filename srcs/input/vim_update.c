@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/25 12:28:47 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 15:26:07 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 14:50:50 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ int			update_vimarrow(int key, t_sh *shell)
 		key = KEY_DOWN;
 	else if (key == 'k')
 		key = KEY_UP;
-	return (update_arrowkey(key, shell));
+	if (key == KEY_LEFT || key == KEY_RIGHT)
+		return (update_arrowkey(key, shell));
+	if (key == KEY_DOWN)
+		move_down(shell);
+	else
+		move_up(shell);
+	return (0);
 }
 
 static int	update_vimback(int key, t_sh *shell)
