@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/01 18:31:00 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 18:49:27 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_sh			*create_shell(void);
 
 int				valid_quotes(t_string **str, int lines);
 int				valid_brackets(t_string **str, int lines);
+
+int				update_shell_history(t_sh *shell);
 
 int				update_printable(int key, t_sh *shell);
 int				update_bkspc(t_sh *shell);

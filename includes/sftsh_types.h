@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:12:50 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 16:37:05 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 18:51:14 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ typedef struct			s_string
 	char				*text;
 	int					len;
 }						t_string;
+
+typedef struct			s_list
+{
+	t_string			*str;
+	struct s_list		*prev;
+	struct s_list		*next;
+}						t_list;
 
 typedef struct			s_command
 {
@@ -47,6 +54,7 @@ typedef struct			s_sh
 	t_coord				*curr;
 	t_coord				*ix;
 	t_coord				*term;
+	t_list				*history;
 	size_t				lines;
 }						t_sh;
 
@@ -59,6 +67,11 @@ void					free_str(t_string **str);
 void					free_strarr(t_string ***strs, int len);
 void					remove_strarr(t_string ***strs, int ix, int len);
 t_string				**insert_strarr(t_string ***strs, t_string *str, int ix, int len);
+
+t_list					*create_list_item(char *str);
+void					list_add(t_list **list, t_list *new_node);
+void					free_list_item(t_list *list);
+void					remove_list(t_list **list);
 
 t_command				*create_command(char **args, char ***env, int num_args);
 void					add_command(t_command **queue, t_command *command);

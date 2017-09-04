@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 13:39:47 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 18:33:38 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,8 @@ int		get_command_str(t_sh *shell)
 					return (1);
 			}
 		}
-		else if (key != '\0')
-			if (process_keypress(key, shell) == 42)
-				return (1);
+		else if (key != '\0' && process_keypress(key, shell) == 42)
+			return (1);
 	}
-	return (0);
+	return (update_shell_history(shell));
 }
