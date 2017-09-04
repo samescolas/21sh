@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 15:22:48 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/06 16:42:12 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:19:43 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ t_coord			*get_cursor_position(void)
 		return (get_cursor_position());
 	tmp = ft_strsplit(&buf[2], ';');
 	ret = create_coord(ft_atoi(tmp[1]) - 1, ft_atoi(tmp[0]) - 1);
+	ft_strarrdel(&tmp);
 	return (ret);
 }

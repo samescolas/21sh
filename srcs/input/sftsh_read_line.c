@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 11:33:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:31:37 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ void		resize_input(t_string ***input, int len)
 
 void	reset_shell(t_sh *shell)
 {
-	free_strarr(&shell->input, shell->lines);
+	char	*tmp;
+
+	tmp = ft_strnew(BUFF_SIZE);
+	if (shell->input)
+		free_strarr(&shell->input, shell->lines);
 	if (!(shell->input = (t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
 		ft_fatal("err: out of memory\n");
-	shell->input[0] = create_str(ft_strnew(BUFF_SIZE));
+	shell->input[0] = create_str(tmp);
 	delete_coord(&shell->strt);
 	shell->strt = get_cursor_position();
 	delete_coord(&shell->curr);
@@ -79,29 +83,6 @@ int		get_command_str(t_sh *shell)
 	ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
 	while ((key = get_keypress()) != '\0')
 	{
-		if (!key)
-			continue ;
-		if (key == 'P')
-		{
-			ft_putstr("\nlines: ");
-			ft_putnbr(shell->lines);
-			ft_putstr("\t(");
-			ft_putnbr(shell->ix->x);
-			ft_putstr(", ");
-			ft_putnbr(shell->ix->y);
-			ft_putstr(")");
-			ft_putstr("\t(");
-			ft_putnbr(shell->curr->x);
-			ft_putstr(", ");
-			ft_putnbr(shell->curr->y);
-			ft_putstr(")");
-			ft_putstr("\t(");
-			ft_putnbr(shell->strt->x);
-			ft_putstr(", ");
-			ft_putnbr(shell->strt->y);
-			ft_putstr(")\n");
-			exit(0);
-		}
 		if (key == KEY_ESCAPE && enter_vim_mode(shell) == 1)
 			return (1);
 		else if (key == KEY_ENTER)

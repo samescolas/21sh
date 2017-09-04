@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 14:33:09 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 11:53:20 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:15:21 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_sh	*create_sh()
 		if (!(shell->input =
 					(t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
 			ft_fatal("err: out of memory\n");
-		shell->input[0] = create_str(ft_strnew(0));
+		shell->input = (void *)0;
 		shell->prompt[0] = create_str(ft_strdup(DEFAULT_PROMPT));
 		shell->prompt[1] = create_str(ft_strdup(DEFAULT_COLOR));
 		shell->cb = (void *)0;
@@ -38,25 +38,6 @@ t_sh	*create_sh()
 	}
 	return (shell);
 }
-
-/*
-static void	print_list(t_list *list)
-{
-	t_list	*tmp;
-
-	if (list)
-		tmp = list;
-	else
-		return ;
-	ft_putendl(tmp->str->text);
-	tmp = tmp->next;
-	while (tmp != list)
-	{
-		ft_putendl(tmp->str->text);
-		tmp = tmp->next;
-	}
-}
-*/
 
 int		update_shell_history(t_sh *shell)
 {

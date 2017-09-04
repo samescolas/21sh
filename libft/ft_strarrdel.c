@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 12:58:05 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/11 18:03:39 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:28:41 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void	ft_strarrdel(char ***arr)
 	i = -1;
 	while ((*arr)[++i])
 		ft_strdel(&(*arr)[i]);
-	*tmp = (void *)0;
+	free(*arr);
+	arr = (void *)0;
 }

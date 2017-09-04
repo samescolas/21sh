@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/04 10:31:04 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 11:23:33 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:17:49 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@
 t_history	*init_history(void)
 {
 	t_history	*ret;
+	char		*tmp;
 
 	if (!(ret = (t_history *)malloc(sizeof(t_history))))
 		ft_fatal("err: out of memory\n");
-	list_add(&ret->list, create_list_item(ft_strdup("beginning of history")));
+	ret->list = (void *)0;
+	tmp = ft_strdup("the beginning of time");
+	list_add(&ret->list, create_list_item(tmp));
 	ret->cursor = (void *)0;
 	ret->len = 1;
+	ft_strdel(&tmp);
 	return (ret);
 }
 
