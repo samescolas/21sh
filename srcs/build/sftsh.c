@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 19:46:53 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:54:57 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int			sftsh(char ***envp)
 {
 	//char	c;
 	static t_sh		*shell;
-	//t_command		*command;
+	t_string		*tmp;
+	t_command		*command;
 
 	if (!shell)
 		shell = create_sh();
@@ -84,15 +85,16 @@ int			sftsh(char ***envp)
 			sess->prompt[2] = get_color(ft_strmap(&sess->prompt[0][4], &ft_tolower));
 		}
 		else if */
-		/*
-		if ((command = parse(sess->prompt[0], envp)))
+		write(1, "\n", 1);
+		tmp = join_strs(shell->input, shell->lines, '\n');
+		if ((command = parse(tmp->text, envp)))
 		{
 			if (sftsh_exec(command) == -42)
 				break ;
+			free_str(&tmp);
 		}
-		*/
+
 		//disp_input(shell->input, shell->lines);
-		write(1, "\n", 1);
 	}
 	return (0);
 	//return (delete_prompt(sess->prompt));

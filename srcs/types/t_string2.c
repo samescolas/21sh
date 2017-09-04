@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 10:55:29 by sescolas          #+#    #+#             */
-/*   Updated: 2017/07/10 18:21:38 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 16:05:47 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ t_string	*join_strs(t_string **arr, int len,  char glue)
 	t_string	*ret;
 	int			ret_len;
 	int			ix;
+	char		*tmp;
 
 	ix = -1;
 	ret_len = 0;
 	while (++ix < len)
 		ret_len += arr[ix]->len;
-	ret = create_str(ft_strnew(ret_len + len - 1));
+	tmp = ft_strnew(ret_len - 1);
+	ret = create_str(tmp);
 	ix = -1;
 	while (++ix < len)
 	{

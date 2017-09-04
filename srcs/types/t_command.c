@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 10:24:58 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/30 09:47:13 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:57:00 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_command	*create_command(char **args, char ***envp, int num_args)
 		if (ret->path == (void *)0 && ret->builtin_id < 0)
 		{
 			ft_strarrdel(&args);
-			free(args);
 			args = (void *)0;
 			free(ret);
 			ret = (void *)0;
@@ -82,10 +81,7 @@ void		free_command(t_command *command)
 	if (command->path)
 		ft_strdel(&(command->path));
 	if (command->args)
-	{
 		ft_strarrdel(&(command->args));
-		free(command->args);
-	}
 	command->path = (void *)0;
 	command->args = (void *)0;
 	command->next = (void *)0;

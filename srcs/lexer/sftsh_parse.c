@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 13:51:08 by sescolas          #+#    #+#             */
-/*   Updated: 2017/05/30 09:52:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:55:42 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ t_command	*parse(char *command, char ***envp)
 	while (tokens[i])
 		add_a_command(&commands, tokens, envp, &i);
 	ft_strarrdel(&tokens);
-	free(tokens);
 	return (commands);
 }
