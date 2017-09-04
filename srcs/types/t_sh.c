@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 14:33:09 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 18:59:19 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 19:48:15 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,41 @@ t_sh	*create_sh()
 		shell->ix = create_coord(0, 0);
 		shell->term = create_coord(get_term_width(), get_term_height());
 		shell->lines = 1;
-		shell->history = create_list_item(ft_strdup("the beginning of time\n"));
+		shell->history = create_list_item(ft_strdup("the beginning of time"));
 		shell->history->next = shell->history;
 		shell->history->prev = shell->history;
 	}
 	return (shell);
 }
 
+static void	print_list(t_list *list)
+{
+	t_list	*tmp;
+
+	if (list)
+		tmp = list;
+	else
+		return ;
+	ft_putendl(tmp->str->text);
+	tmp = tmp->next;
+	while (tmp != list)
+	{
+		ft_putendl(tmp->str->text);
+		tmp = tmp->next;
+	}
+}
+
 int		update_shell_history(t_sh *shell)
 {
 	t_string	*tmp;
 
-	tmp = join_strs(shell->input, shell->ix->y, '\n');
+
+	tmp = join_strs(shell->input, shell->lines, '\n');
+	ft_putendl(tmp->text);
 	list_add(&shell->history, create_list_item(tmp->text));
-	free_str(&tmp);
+	ft_putstr("adding ");
+	ft_putstr(tmp->text);
+	ft_putendl(" to list...\n\nlist:");
+	print_list(shell->history);
 	return (0);
 }

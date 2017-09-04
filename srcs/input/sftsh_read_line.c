@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 18:33:38 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 19:23:43 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	reset_shell(t_sh *shell)
 /*
 ** Updates session based on pressed key.
 */
-static int process_keypress(int key, t_sh *shell)
+int 	process_keypress(int key, t_sh *shell)
 {
 	if (ft_isprint(key) && key != KEY_ENTER)
 		return (update_printable(key, shell));
@@ -116,5 +116,7 @@ int		get_command_str(t_sh *shell)
 		else if (key != '\0' && process_keypress(key, shell) == 42)
 			return (1);
 	}
-	return (update_shell_history(shell));
+	if (shell->ix->y > 0 || shell->input[0]->len > 0)
+		return (update_shell_history(shell));
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:32:51 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/03 18:49:27 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/03 19:23:54 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static const int KEY_DEL = 1725;
 void			resize_input(t_string ***input, int len);
 
 int				get_keypress(void);
+int 			process_keypress(int key, t_sh *shell);
 int				get_command_str(t_sh *shell);
 t_sh			*create_shell(void);
 
