@@ -6,7 +6,7 @@
 #    By: sescolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 16:16:10 by sescolas          #+#    #+#              #
-#    Updated: 2017/09/01 17:25:57 by sescolas         ###   ########.fr        #
+#    Updated: 2017/09/05 19:26:18 by sescolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CC) .objs/*.o $(LINK) -o $@
 
-$(OBJS) : $(SRCS) $(HEADERS) $(LIBFT)
+$(OBJS) : $(SRCS) $(LIBFT)
 	$(CC) $(CFLAGS) -Iincludes -c $(shell find . -name $(notdir $(@:.o=.c))) -o $@
 
 $(LIBFT) : $(LIB_DEPS)
@@ -40,7 +40,7 @@ $(LIBFT) : $(LIB_DEPS)
 .PHONY : clean fclean re print
 
 print :
-	@echo $(OBJDEPS)
+	@echo $(OBJS)
 
 clean :
 	rm -f libft/*\.o$

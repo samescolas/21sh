@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:57:44 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 15:54:57 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/05 19:14:56 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ int			sftsh(char ***envp)
 	t_string		*tmp;
 	t_command		*command;
 
+	ft_putendl("inside sftsh");
 	if (!shell)
 		shell = create_sh();
+	ft_putendl("created shell");
 	while (envp && get_command_str(shell) == 0)
 	{
 		/*if (ft_strncmp(sess->prompt[0], "ps1=", 4) == 0)

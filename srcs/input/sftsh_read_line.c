@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 19:39:12 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 15:31:37 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/05 19:21:35 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,29 @@ void	reset_shell(t_sh *shell)
 {
 	char	*tmp;
 
+	ft_putendl("inside reset_shell");
 	tmp = ft_strnew(BUFF_SIZE);
-	if (shell->input)
-		free_strarr(&shell->input, shell->lines);
+	ft_putendl("created new string...");
+	free_strarr(&shell->input, shell->lines);
+	ft_putendl("freed array");
 	if (!(shell->input = (t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
 		ft_fatal("err: out of memory\n");
+	ft_putendl("allocated space for input");
 	shell->input[0] = create_str(tmp);
+	ft_putendl("deleting old start coordinate");
 	delete_coord(&shell->strt);
+	ft_putendl("deleted old start coordinate");
 	shell->strt = get_cursor_position();
+	ft_putendl("deleting old curr coordinate");
 	delete_coord(&shell->curr);
+	ft_putendl("deleted old curr coordinate");
 	shell->curr = create_coord(
 			shell->strt->x + shell->prompt[0]->len + 1, shell->strt->y);
 	shell->ix->x = 0;
 	shell->ix->y = 0;
 	shell->lines = 1;
 	shell->history->cursor = (void *)0;
+	ft_putendl("leaving reset_shell");
 }
 
 /*
@@ -79,6 +87,7 @@ int		get_command_str(t_sh *shell)
 {
 	int		key;
 
+	ft_putendl("inside get_command_str");
 	reset_shell(shell);
 	ft_padstr(shell->prompt[0]->text, 1, shell->prompt[1]->text);
 	while ((key = get_keypress()) != '\0')

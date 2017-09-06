@@ -6,7 +6,7 @@
 /*   By: sescolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 14:33:09 by sescolas          #+#    #+#             */
-/*   Updated: 2017/09/04 15:15:21 by sescolas         ###   ########.fr       */
+/*   Updated: 2017/09/05 19:19:05 by sescolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,19 @@ t_sh	*create_sh()
 {
 	t_sh	*shell;
 
+	ft_putendl("creating shell...");
 	if ((shell = (t_sh *)malloc(sizeof(t_sh))))
 	{
+		ft_putendl("allocated space for shell");
 		if (!(shell->input =
 					(t_string **)malloc((BUFF_LINES + 1) * sizeof(t_string *))))
 			ft_fatal("err: out of memory\n");
-		shell->input = (void *)0;
+		ft_putendl("allocated space for input");
+		ft_bzero(&shell->input, (BUFF_LINES + 1) * sizeof(t_string *));
+		ft_putendl("cleared input");
 		shell->prompt[0] = create_str(ft_strdup(DEFAULT_PROMPT));
 		shell->prompt[1] = create_str(ft_strdup(DEFAULT_COLOR));
+		ft_putendl("adding prompt");
 		shell->cb = (void *)0;
 		shell->strt = get_cursor_position();
 		shell->curr = create_coord(
@@ -36,6 +41,7 @@ t_sh	*create_sh()
 		shell->lines = 1;
 		shell->history = init_history();
 	}
+	ft_putendl("leaving create_shell");
 	return (shell);
 }
 
